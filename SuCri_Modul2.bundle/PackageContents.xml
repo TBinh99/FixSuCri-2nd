@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage
+	SchemaVersion="1.0"
+	AutodeskProduct="Plant3D"
+	Name="SuCri_Module2"
+	Description="SuCri_Module2"
+	AppVersion="1.0.0"
+	Author="IntegaDesign"
+	SupportedLocales="Enu"
+	ProductCode="*"
+>
+
+	<CompanyDetails
+		Name="IntegaDesign"
+		Url="integadesign.de"
+		Email="info@integadesign.de"
+	/>
+
+	<Components>
+		<RuntimeRequirements
+			SeriesMin="R24.3"
+			Platform="Plant3D"
+			SupportPath="./Contents/bin/"
+		/>
+
+		<ComponentEntry
+			AppName="SuCri Module 2"
+			ModuleName="./Contents/bin/SuCri.Modul2.Addin.dll"
+			AppDescription="Sucri combined all application"
+			LoadOnCommandInvocation="True" LoadOnRequest="True">
+			<Commands>
+				<Command Local="CallRibbon" Global="CallRibbon" StartupCommand="True" />
+			</Commands>
+			
+		/>
+
+		<!-- <ComponentEntry
+			AppName="Add trusted path"
+			AppDescription="XML for export"
+			ModuleName="./Contents/Tools/AcadSettings.lsp"
+			LoadOnAutoCADStartup="True"
+		/> 
+		
+		<ComponentEntry
+			AppName="SuCri Module 2"
+			AppType="CuiX"
+			ModuleName="./Contents/CUIX/SuCri_Module2.cuix"
+		/>-->
+		</ComponentEntry>
+
+		<!-- <ComponentEntry
+			AppName="Json data"
+			ModuleName="./Contents/Tools/data.json"
+		AppDescription="Json data"
+			LoadOnAutoCADStartup="True"
+		 /> -->
+	</Components>
+</ApplicationPackage>
