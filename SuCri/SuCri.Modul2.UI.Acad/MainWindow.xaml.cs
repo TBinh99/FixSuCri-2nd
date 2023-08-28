@@ -82,7 +82,10 @@ namespace SuCri.Modul2.UI.Acad
         {
             this.WindowState = WindowState.Minimized;
         }
-
+        private void btnExpand_Click(object sender, RoutedEventArgs e)
+        {
+            WindowExpander.IsExpanded = false;
+        }
         private void btnMaximize_Click(object sender, RoutedEventArgs e)
         {
             if (this.WindowState == WindowState.Normal)

@@ -6,6 +6,12 @@ using Autodesk.Windows;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Windows;
+using Autodesk.AutoCAD.Windows;
+using SuCri.Modul2.UI.Acad;
+using System.Windows.Forms.Integration;
+using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
+using SuCri.Modul2.Addin.CustomPalette;
 
 namespace SuCri.Modul2.Addin
 {
@@ -381,6 +387,7 @@ namespace SuCri.Modul2.Addin
                 //pan4Panel.Items.Add(pan4Button4);
 
                 tab.IsActive = true;
+                ShowWPFPalette();
             }
             catch (System.Exception ex)
             {
@@ -388,7 +395,39 @@ namespace SuCri.Modul2.Addin
                 throw;
             }
         }
+        public void ShowWPFPalette()
+        {
+            PaletteSet _ps = null;
+            if (_ps == null)
 
+            {
+                // Create the palette set
+                _ps = new PaletteSet("WPF Palette");
+
+                _ps.Size = new System.Drawing.Size(400, 600);
+
+                _ps.DockEnabled = (DockSides)((int)DockSides.Left + (int)DockSides.Right);
+
+                // Create our first user control instance and
+
+                // host it on a palette using AddVisual()
+                System.Windows.Controls.UserControl uc = new SiklaPalette(){};
+
+                ElementHost host = new ElementHost();
+
+                host.AutoSize = true;
+                host.Dock = DockStyle.Fill;
+                host.Child = uc;
+
+                _ps.Add("AddVisual", host);
+            }
+
+            // Display our palette set
+            _ps.KeepFocus = true;
+
+            _ps.Visible = true;
+
+        }
         private class RibbonCommandHandler : System.Windows.Input.ICommand
         {
             public bool CanExecute(object parameter)

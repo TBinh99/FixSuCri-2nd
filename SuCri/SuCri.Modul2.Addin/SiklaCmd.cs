@@ -4,6 +4,12 @@ using System.Reflection;
 using System.Windows.Forms;
 using SuCri.Modul2.UI.Acad.Views;
 using SuCri.Modul2.UI.Acad;
+using Autodesk.AutoCAD.Windows;
+using System.Drawing;
+using System.Windows;
+using System.Security.Cryptography;
+using System.Windows.Forms.Integration;
+using Autodesk.Windows;
 
 [assembly: CommandClass(typeof(SuCri.Modul2.Addin.SiklaCmd))]
 
@@ -182,7 +188,7 @@ namespace SuCri.Modul2.Addin
             string copyRight, version;
             copyRight = ((AssemblyCopyrightAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyCopyrightAttribute))).Copyright;
             version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            MessageBox.Show($"Current version : {version}\n{copyRight}", "About",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            System.Windows.Forms.MessageBox.Show($"Current version : {version}\n{copyRight}", "About",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
 
         
