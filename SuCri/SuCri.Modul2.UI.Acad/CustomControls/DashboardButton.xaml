@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="SuCri.Modul2.UI.Acad.CustomControls.DashboardButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SuCri.Modul2.UI.Acad.CustomControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/SuCri.Modul2.UI.Acad;component/Dictionaries/MainResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <materialDesign:Card
+                Style="{DynamicResource DashboardCard}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                        Height="100" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+          
+            <Button
+      Grid.Row="0"
+      Margin="0,0,-10,0"
+      HorizontalAlignment="Right"
+      VerticalAlignment="Bottom"
+                    Background="{DynamicResource color1}"
+      Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
+                <materialDesign:PackIcon
+        Kind="DatabaseSearchOutline" Width="20" Height="20" />
+            </Button>
+            <StackPanel
+                    Grid.Row="1">
+                <TextBlock Style="{DynamicResource DashboardCardText}" 
+                        Text="Cycling">
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </materialDesign:Card>
+</UserControl>

@@ -1,0 +1,56 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:local="clr-namespace:SuCri.Modul2.UI.Acad.Utils">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!--<materialDesign:BundledTheme
+            BaseTheme="Light"
+            ColorAdjustment="{materialDesign:ColorAdjustment}"
+            PrimaryColor="Blue"
+            SecondaryColor="Yellow" />-->
+
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Popupbox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DataGrid.xaml" />
+        <!--<ResourceDictionary>
+            <Style
+                x:Key="MaterialDesignTextBox"
+                BasedOn="{StaticResource MaterialDesignTextBox}"
+                TargetType="{x:Type TextBox}">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+            </Style>-->
+        <!--</ResourceDictionary>-->
+        <!--<ResourceDictionary Source="pack://application:,,,/WPFinACAD;component/Styles/UIColors.xaml"/>-->
+        <ResourceDictionary Source="pack://application:,,,/SuCri.Modul2.UI.Acad;component/Styles/ButtonStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/SuCri.Modul2.UI.Acad;component/Dictionaries/Locator.xaml"/>
+        <!--<ResourceDictionary Source="pack://application:,,,/WPFinACAD;component/Dictionaries/Skin01.xaml"/>-->
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--<Style x:Key="MaterialDesignWindow"
+           TargetType="Window">
+        <Setter Property="FontFamily"
+                Value="{materialDesign:MaterialDesignFont}" />
+        <Setter Property="TextElement.FontSize"
+                Value="13" />
+        <Setter Property="TextElement.FontWeight"
+                Value="Regular" />
+        <Setter Property="TextElement.Foreground"
+                Value="{DynamicResource MaterialDesignBody}" />
+        <Setter Property="TextOptions.TextFormattingMode"
+                Value="Ideal" />
+        <Setter Property="TextOptions.TextRenderingMode"
+                Value="Auto" />
+    </Style>-->
+
+</ResourceDictionary>

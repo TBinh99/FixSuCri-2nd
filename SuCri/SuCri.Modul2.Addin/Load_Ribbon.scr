@@ -1,0 +1,13 @@
+;Loading the .Net module
+FILEDIA
+;Neuen Wert für FILEDIA eingeben <0>:
+0
+_Netload
+;Pfad eingeben
+"D:\GitHub Sync\Catalogs\SuCri\SuCri.Modul2.Addin\bin\Debug\SuCri.Modul2.Addin.dll"
+;
+; Run the command
+LoadSuCriRibbon
+FILEDIA
+;Neuen Wert für FILEDIA eingeben <0>: 
+1

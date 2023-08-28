@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{68F12CCC-B29D-46A7-B8EC-62FA4D4CD563}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SuCri.Modul2.UI.Acad</RootNamespace>
+    <AssemblyName>SuCri.Modul2.UI.Acad</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="sucri_support_app, Version=1.0.8633.29282, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\.NET-INTEGADESIGN_KHAILONG\1. SuCri Module 2\SuCri_Module2.bundle\Contents\Tools\sucri_support_app.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomControls\BindablePasswordBox.xaml.cs">
+      <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\DashboardButton.xaml.cs">
+      <DependentUpon>DashboardButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LicenceManagerUI.xaml.cs">
+      <DependentUpon>LicenceManagerUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InstallationWizardView.xaml.cs">
+      <DependentUpon>InstallationWizardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Languages\UILanguage.Designer.cs">
+      <DependentUpon>UILanguage.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TESTUI.xaml.cs">
+      <DependentUpon>TESTUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Language.cs" />
+    <Compile Include="Utils\ViewModelLocator.cs" />
+    <Compile Include="ViewModels\AutoFeaturesViewModel.cs" />
+    <Compile Include="ViewModels\DocumentationsViewModel.cs" />
+    <Compile Include="ViewModels\HelpViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\InstallationWizardViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\NotificationViewModel.cs" />
+    <Compile Include="ViewModels\PropertiesViewModel.cs" />
+    <Compile Include="ViewModels\ReportsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SUCreationViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ViewModelCommand.cs" />
+    <Compile Include="Views\AutoFeaturesView.xaml.cs">
+      <DependentUpon>AutoFeaturesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DocumentationsView.xaml.cs">
+      <DependentUpon>DocumentationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HelpVIew.xaml.cs">
+      <DependentUpon>HelpVIew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PropertiesView.xaml.cs">
+      <DependentUpon>PropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportsView.xaml.cs">
+      <DependentUpon>ReportsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SampleUI.xaml.cs">
+      <DependentUpon>SampleUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SUCreationView.xaml.cs">
+      <DependentUpon>SUCreationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NotificationView.xaml.cs">
+      <DependentUpon>NotificationView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CustomControls\BindablePasswordBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomControls\DashboardButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Locator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\MainResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dictionaries\Skin01.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dictionaries\Skin02.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LicenceManagerUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\InstallationWizardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\UIColors1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\UIColors2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TESTUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Halfen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Hesterberg.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Bernecker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MPSS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Sikla.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Hilti.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AutoFeaturesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DocumentationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HelpVIew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReportsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SampleUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SUCreationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotificationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Languages\UILanguage.de-DE.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\UILanguage.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\UILanguage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UILanguage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoCAD.NET">
+      <Version>24.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialDesignThemes">
+      <Version>4.9.0</Version>
+    </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>4.1.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\back-image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\key-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\product.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sikla.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\user-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttonpics\SuCri_Seite 1.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 10.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 11.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 12.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 13.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 14.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 15.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 16.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 19.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 2.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 3.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 4.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 5.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 6.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 7.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 8.png" />
+    <Resource Include="Images\Buttonpics\SuCri_Seite 9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Hilti.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\unused\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttonpics\Button1_Seite 1.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 11.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 12.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 13.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 14.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 15.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 16.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 18.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 2.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 3.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 6.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 7.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 8.png" />
+    <Resource Include="Images\Buttonpics\Button1_Seite 9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\productpics\Bild_Seite 19.png" />
+    <Resource Include="Images\productpics\Bild_Seite 21.png" />
+    <Resource Include="Images\productpics\Bild_Seite 22.png" />
+    <Resource Include="Images\productpics\Bild_Seite 23.png" />
+    <Resource Include="Images\productpics\Bild_Seite 24.png" />
+    <Resource Include="Images\productpics\Bild_Seite 25.png" />
+    <Resource Include="Images\productpics\Bild_Seite 26.png" />
+    <Resource Include="Images\productpics\Bild_Seite 27.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\productpics\Bild_Seite 26_copy_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Typicalpics\Bild_Seite 10.png" />
+    <Resource Include="Images\Typicalpics\Bild_Seite 4.png" />
+    <Resource Include="Images\Typicalpics\Bild_Seite 5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\g3855.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\g1493.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MPSS.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
