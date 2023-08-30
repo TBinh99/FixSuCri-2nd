@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 namespace SuCri.Modul2.UI.Acad.ViewModels
@@ -71,7 +72,14 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
         public HomeViewModel()
         {
             ////Initialize Commands
-            attachCompCommand = new ViewModelCommand(ExecuteAttachCompCommand);
+            attachCompCommand = new ViewModelCommand(param => 
+            {
+                if (param is System.Windows.Controls.UserControl p)
+                {
+                    System.Windows.Window window = System.Windows.Window.GetWindow(p);
+                    ExecuteAttachCompCommand(window);
+                }
+            });
             selectSUCommand = new ViewModelCommand(ExecuteSelectSUCommand);
             detachCompCommand = new ViewModelCommand(ExecuteDetachCompCommand);
             getXDataCommand = new ViewModelCommand(ExecuteGetXDataCommand);
@@ -109,16 +117,24 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
             }
         }
 
-        private void ExecuteAttachCompCommand(object obj)
+        private void ExecuteAttachCompCommand(System.Windows.Window p)
         {
-
+            p.Hide();
             Document doc = Application.DocumentManager.MdiActiveDocument;
             if (doc == null)
                 return;
+
+            Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
             doc.SendStringToExecute("_.AttachSupport\n", true, false, false);
+            Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
+            p.Show();
 
         }
-
+        private void MdiActiveDocument_CommandCancelled(object sender, CommandEventArgs e,System.Windows.Window p) 
+        {
+            Application.DocumentManager.MdiActiveDocument.CommandCancelled -= (sender1, e1) => MdiActiveDocument_CommandCancelled(sender1, e1, p);
+            p.Show();
+        }
         private void ExecuteSelectSUCommand(object obj)
         {
 

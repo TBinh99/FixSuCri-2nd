@@ -185,7 +185,6 @@ namespace SuCri.Modul2.Addin
         {
             UISingleton.Close();
             PaletteSingleton.Show("Sikla");
-
         }
         [CommandMethod("ExtensionInfo")]
         public static void ExtensionInfo()
