@@ -195,7 +195,38 @@ namespace SuCri.Modul2.Addin
             System.Windows.Forms.MessageBox.Show($"Current version : {version}\n{copyRight}", "About",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
 
-        
+        [CommandMethod("Test")]
+        public void Test()
+        {
+            Document doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Database db = doc.Database;
+            Editor editor = doc.Editor;
+
+            // Prompt user for the start point of the line
+            PromptPointResult startPointResult = editor.GetPoint("Enter start point: ");
+            if (startPointResult.Status != PromptStatus.OK)
+                return;
+
+            // Prompt user for the end point of the line
+            PromptPointResult endPointResult = editor.GetPoint("Enter end point: ");
+            if (endPointResult.Status != PromptStatus.OK)
+                return;
+
+            // Create the line using the user's input
+            using (Transaction tr = db.TransactionManager.StartTransaction())
+            {
+                BlockTable blockTable = tr.GetObject(db.BlockTableId, OpenMode.ForRead) as BlockTable;
+                BlockTableRecord modelSpace = tr.GetObject(blockTable[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+
+                Line line = new Line(startPointResult.Value, endPointResult.Value);
+                modelSpace.AppendEntity(line);
+                tr.AddNewlyCreatedDBObject(line, true);
+
+                tr.Commit();
+            }
+
+            editor.WriteMessage("Line created successfully.\n");
+        }
 
         //private void RegisterHaleyThemes()
         //{

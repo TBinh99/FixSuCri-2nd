@@ -1,4 +1,6 @@
 ﻿using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.Windows.AcadDM;
 using Autodesk.AutoCAD.Windows.Data;
 using CommunityToolkit.Mvvm.Input;
 using SuCri.Modul2.UI.Acad.Utils;
@@ -123,17 +125,25 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
             Document doc = Application.DocumentManager.MdiActiveDocument;
             if (doc == null)
                 return;
+            string commandToExcute = "Test";
+            doc.CommandCancelled += (sender, e) => doc_CommandHandler(sender, e, p, commandToExcute);
+            doc.CommandEnded += (sender, e) => doc_CommandHandler(sender, e, p, commandToExcute);
 
-            Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
-            doc.SendStringToExecute("_.AttachSupport\n", true, false, false);
-            Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
-            p.Show();
-
+            doc.SendStringToExecute(commandToExcute, true, false, false);
+            //Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
+            //doc.SendStringToExecute("_.AttachSupport\n", true, false, false);
+            //Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
+        }
+        static void doc_CommandHandler(object sender, CommandEventArgs e, System.Windows.Window p, string commandName)
+        {
+            if (e.GlobalCommandName == commandName.ToUpper())
+            {
+                p.Show();
+            }
         }
         private void MdiActiveDocument_CommandCancelled(object sender, CommandEventArgs e,System.Windows.Window p) 
         {
             Application.DocumentManager.MdiActiveDocument.CommandCancelled -= (sender1, e1) => MdiActiveDocument_CommandCancelled(sender1, e1, p);
-            p.Show();
         }
         private void ExecuteSelectSUCommand(object obj)
         {
