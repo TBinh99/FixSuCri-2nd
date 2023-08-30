@@ -10,9 +10,8 @@ namespace SuCri.Modul2.Addin
         public static string Theme { get; set; }
         public UISingleton()
         {
-            
             ViewModel = new UI.Acad.ViewModels.MainViewModel();
-            View = new MainWindow(Theme){ };
+            View = new WindowCover(Theme) { };
             View.DataContext = ViewModel;
             View.Closed += (s, e) =>
             {
@@ -34,7 +33,7 @@ namespace SuCri.Modul2.Addin
             }
         }
 
-        public MainWindow View { get; set; }
+        public WindowCover View { get; set; }
 
         public SuCri.Modul2.UI.Acad.ViewModels.MainViewModel ViewModel { get; set; }
 
@@ -48,6 +47,16 @@ namespace SuCri.Modul2.Addin
             else
             {
                 Instance.View.Show();
+            }
+        }
+        public static void Close()
+        {
+            if(_instance != null) 
+            {
+                if (Instance.View.IsLoaded)
+                {
+                    Instance.View.Close();
+                }
             }
         }
     }

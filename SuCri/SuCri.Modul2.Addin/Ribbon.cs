@@ -12,6 +12,13 @@ using System.Windows.Forms.Integration;
 using System.Windows.Forms;
 using MessageBox = System.Windows.Forms.MessageBox;
 using SuCri.Modul2.Addin.CustomPalette;
+using System.Runtime.InteropServices;
+using Autodesk.AutoCAD.Windows.ToolPalette;
+using Autodesk.AutoCAD.DatabaseServices;
+using System.Windows.Shapes;
+using System.Xml.Linq;
+using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.EditorInput;
 
 namespace SuCri.Modul2.Addin
 {
@@ -34,7 +41,7 @@ namespace SuCri.Modul2.Addin
                 };
 
                 ribbonControl.Tabs.Add(tab);
-                
+
                 // create Ribbon panels
                 var panel1Panel = new RibbonPanelSource
                 {
@@ -88,6 +95,19 @@ namespace SuCri.Modul2.Addin
                 //    CommandHandler = new RibbonCommandHandler(),
                 //    CommandParameter = "HalfenForm",
                 //};
+
+                var pan1Button4 = new RibbonButton
+                {
+                    Text = "Palette",
+                    ShowText = true,
+                    ShowImage = true,
+                    Image = Images.GetBitmap(Properties.Resources.Halfen),
+                    LargeImage = Images.GetBitmap(Properties.Resources.Halfen),
+                    Orientation = System.Windows.Controls.Orientation.Vertical,
+                    Size = RibbonItemSize.Large,
+                    CommandHandler = new RibbonCommandHandler(),
+                    CommandParameter = "Palette",
+                };
 
                 //var panel2Panel = new RibbonPanelSource
                 //{
@@ -150,6 +170,7 @@ namespace SuCri.Modul2.Addin
                 panel1Panel.Items.Add(pan1Button1);
                 panel1Panel.Items.Add(pan1Button2);
                 //panel1Panel.Items.Add(pan1Button3);
+                panel1Panel.Items.Add(pan1Button4);
                 //panel3Panel.Items.Add(pan3Button1);
                 //panel1Panel.Items.Add(new RibbonSeparator());
                 //panel1Panel.Items.Add(pan1Row1);
@@ -387,7 +408,6 @@ namespace SuCri.Modul2.Addin
                 //pan4Panel.Items.Add(pan4Button4);
 
                 tab.IsActive = true;
-                ShowWPFPalette();
             }
             catch (System.Exception ex)
             {
@@ -395,54 +415,101 @@ namespace SuCri.Modul2.Addin
                 throw;
             }
         }
-        public void ShowWPFPalette()
-        {
-            PaletteSet _ps = null;
-            if (_ps == null)
 
-            {
-                // Create the palette set
-                _ps = new PaletteSet("WPF Palette");
+        #region 
+        //    const string catName = "ScriptCatalog";
 
-                _ps.Size = new System.Drawing.Size(400, 600);
+        //    const string palName = "Scripts";
+        //    ToolPaletteManager tpm = ToolPaletteManager.Manager;
+        //    Type t = typeof(SiklaTool);
+        //    GuidAttribute ga =(GuidAttribute)t.GetCustomAttributes(typeof(GuidAttribute), false)[0];
 
-                _ps.DockEnabled = (DockSides)((int)DockSides.Left + (int)DockSides.Right);
+        //    Guid g = new Guid(ga.Value);
+        //    SiklaTool tool = new SiklaTool();
 
-                // Create our first user control instance and
+        //    Catalog cat;
 
-                // host it on a palette using AddVisual()
-                System.Windows.Controls.UserControl uc = new SiklaPalette(){};
+        //    Autodesk.AutoCAD.Windows.ToolPalette.Palette pal = null;
+        //    CatalogItem ci = tpm.StockToolCatalogs.Find(g);
+        //    var test = tpm.StockToolCatalogs;
 
-                ElementHost host = new ElementHost();
+        //    if (ci != null)
+        //    {
+        //        // If it is, search each catalog for our palette
+        //        foreach (CatalogItem ci2 in tpm.Catalogs)
+        //        {
+        //            for (int i = 0; i < ci2.ChildCount; i++)
+        //            { 
+        //                CatalogItem ci3 = ci2.GetChild(i);
+        //                if (ci3 != null && ci3.Name == palName)
+        //                {
+        //                    pal = ci3 as Autodesk.AutoCAD.Windows.ToolPalette.Palette;
+        //                    break;
+        //                }
+        //            }
+        //            if (pal != null)
+        //                break;
+        //        }
+        //    }
+        //    if (pal == null)
+        //    {
+        //        cat = tool.CreateStockTool(catName);
+        //        pal = tool.CreatePalette(cat, palName);
+        //        //cat.DeleteAllChildren();
+        //        //pal.DeleteAllChildren();
+        //    }
+        //    ImageInfo ii = new ImageInfo();
+        //    ii.ResourceFile = "D:\\PTB\\JOB\\Fromgithub\\FixSuCri-2nd\\SuCri\\SuCri.Modul2.Addin\\Resources\\sikla.png";
+        //    ii.Size = new System.Drawing.Size(32, 32);
+        //    string name = "Sikla";
 
-                host.AutoSize = true;
-                host.Dock = DockStyle.Fill;
-                host.Child = uc;
+        //    tool.CreateCommandTool(
+        //      pal,
+        //      name,
+        //      ii,
+        //      "COMMAND SiklaForm"
+        //    );
 
-                _ps.Add("AddVisual", host);
-            }
+        //    //// Finally we reload the catalogs to display the change
+        //    tpm.LoadCatalogs(CatalogTypeFlags.Catalog, LoadFlags.LoadImages );
+        //}
 
-            // Display our palette set
-            _ps.KeepFocus = true;
+        //[Guid("3D4EB45D-F638-439B-9555-8D489693D6C5")]
+        //[Tool("SiklaTool", "IDB_TOOL")]
+        //[ClassInterface(ClassInterfaceType.AutoDual)]
+        //public class SiklaTool : CustomToolBase
+        //{
+        //}
+        #endregion
+        //public class MyUserControl : System.Windows.Controls.UserControl
+        //{
+        //    public MyUserControl()
+        //    {
+        //        // Add your MainWindow content here
+        //        // For example, you can create a new instance of MainWindow
+        //        UserControl1 mainWindow = new UserControl1();
+        //        mainWindow.Theme = "Sikla";
 
-            _ps.Visible = true;
-
-        }
+        //        // Add the MainWindow content to the UserControl's layout panel
+        //        // This can be a Grid, StackPanel, etc.
+        //        Content = mainWindow;
+        //    }
+        //}
         private class RibbonCommandHandler : System.Windows.Input.ICommand
         {
             public bool CanExecute(object parameter)
             {
-                    return true;
+                return true;
             }
 
             public event EventHandler CanExecuteChanged;
 
             public void Execute(object parameter)
             {
-                var button=parameter as RibbonButton;
-                if (button.CommandParameter==null) return;
+                var button = parameter as RibbonButton;
+                if (button.CommandParameter == null) return;
                 Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument.
-                    SendStringToExecute(button.CommandParameter+" ",true,false,false);
+                    SendStringToExecute(button.CommandParameter + " ", true, false, false);
             }
         }
 

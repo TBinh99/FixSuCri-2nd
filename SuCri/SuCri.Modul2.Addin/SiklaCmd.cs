@@ -10,6 +10,9 @@ using System.Windows;
 using System.Security.Cryptography;
 using System.Windows.Forms.Integration;
 using Autodesk.Windows;
+using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
 
 [assembly: CommandClass(typeof(SuCri.Modul2.Addin.SiklaCmd))]
 
@@ -17,9 +20,6 @@ namespace SuCri.Modul2.Addin
 {
     public class SiklaCmd
     {
-
- 
-
         [CommandMethod("SiklaForm")]
         public void SiklaForm()
         {
@@ -56,7 +56,7 @@ namespace SuCri.Modul2.Addin
             //{
             //    MessageBox.Show(Environment.NewLine + ex.Message);
             //}
-
+            PaletteSingleton.Hide();
             UISingleton.Show("Sikla");
         }
 
@@ -96,7 +96,7 @@ namespace SuCri.Modul2.Addin
             //{
             //    MessageBox.Show(Environment.NewLine + ex.Message);
             //}
-
+            //PaletteSingleton.Hide();
             //SiklaSingleton.Show();
         }
 
@@ -137,7 +137,7 @@ namespace SuCri.Modul2.Addin
             //{
             //    MessageBox.Show(Environment.NewLine + ex.Message);
             //}
-
+            PaletteSingleton.Hide();
             UISingleton.Show("MPSS");
         }
 
@@ -177,11 +177,16 @@ namespace SuCri.Modul2.Addin
             //{
             //    MessageBox.Show(Environment.NewLine + ex.Message);
             //}
-
+            //PaletteSingleton.Hide();
             //SiklaSingleton.Show();
         }
+        [CommandMethod("Palette")]
+        public void Palette()
+        {
+            UISingleton.Close();
+            PaletteSingleton.Show("Sikla");
 
-
+        }
         [CommandMethod("ExtensionInfo")]
         public static void ExtensionInfo()
         {

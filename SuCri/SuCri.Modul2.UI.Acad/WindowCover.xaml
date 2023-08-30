@@ -1,0 +1,23 @@
+﻿<Window
+    x:Class="SuCri.Modul2.UI.Acad.WindowCover"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SuCri.Modul2.UI.Acad"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:SuCri.Modul2.UI.Acad"
+    Title="MainWindow"
+    Width="auto"
+    Height="auto"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Left="{Binding WinLeftPosition, Mode=TwoWay}"
+    ResizeMode="NoResize"
+    Top="{Binding WinTopPosition, Mode=TwoWay}"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid>
+        <local:MainView x:Name="MainView" />
+    </Grid>
+</Window>

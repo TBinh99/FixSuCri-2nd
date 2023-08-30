@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,63 +10,36 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
-using MaterialDesignThemes.Wpf;
-using System.Windows.Controls.Primitives;
-using System.Reflection;
-using SuCri.Modul2.UI.Acad.ViewModels;
-using SuCri.Modul2.UI.Acad.Languages;
-using System.Globalization;
-using System.Threading;
-using System.Windows.Markup;
-using System.Diagnostics;
 
 namespace SuCri.Modul2.UI.Acad
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class MainWindow : System.Windows.Window
+    public partial class MainView : UserControl
     {
-        public string Theme { get; set; }
-        public MainWindow(string theme)
+        public MainView()
         {
-            Theme = theme;
+            InitializeComponent();
             Properties.Settings.Default.Theme = Theme;
             //var theme = "MPSS";
-            InitializeComponent();
             ResourceDictionary newRes = new ResourceDictionary();
             newRes.Source = new Uri("pack://application:,,,/SuCri.Modul2.UI.Acad;component/Themes/" + Theme + ".xaml");
             ResourceDictionary oldRes = this.Resources.MergedDictionaries[1];
             this.Resources.MergedDictionaries.Remove(oldRes);
             this.Resources.MergedDictionaries.Add(newRes);
-            //cbxTheme.Text = theme;
         }
-
-        //public MainWindow(string theme)
-        //{
-        //    var theme = "Sikla";
-        //    InitializeComponent();
-        //    ResourceDictionary newRes = new ResourceDictionary();
-        //    newRes.Source = new Uri("pack://application:,,,/SuCri.Modul2.UI.Acad;component/Themes/" + theme + ".xaml");
-        //    ResourceDictionary oldRes = this.Resources.MergedDictionaries[1];
-        //    this.Resources.MergedDictionaries.Remove(oldRes);
-        //    this.Resources.MergedDictionaries.Add(newRes);
-        //    //cbxTheme.Text = theme;
-
-        //}
-
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
         private void pnlControlBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            WindowInteropHelper helper = new WindowInteropHelper(this);
+            WindowInteropHelper helper = new WindowInteropHelper(Window.GetWindow(this));
             SendMessage(helper.Handle, 161, 2, 0);
         }
 
@@ -75,12 +50,20 @@ namespace SuCri.Modul2.UI.Acad
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Window currentWindow = Window.GetWindow(this);
+            if(currentWindow != null) 
+            {
+                Window.GetWindow(this).Close();
+            }
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            Window currentWindow = Window.GetWindow(this);
+            if (currentWindow != null)
+            {
+                currentWindow.WindowState = WindowState.Minimized;
+            }
         }
         private void btnExpand_Click(object sender, RoutedEventArgs e)
         {
@@ -88,9 +71,13 @@ namespace SuCri.Modul2.UI.Acad
         }
         private void btnMaximize_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Maximized;
-            else this.WindowState = WindowState.Normal;
+            Window currentWindow = Window.GetWindow(this);
+            if (currentWindow != null) 
+            {
+                if (currentWindow.WindowState == WindowState.Normal)
+                    currentWindow.WindowState = WindowState.Maximized;
+                else currentWindow.WindowState = WindowState.Normal;
+            }
         }
 
         //private void cbxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -127,9 +114,9 @@ namespace SuCri.Modul2.UI.Acad
                 var emailAddress = "plant3d@sikla.de";
                 var betreff = "Problem with SuCri - Sikla Extension";
 
-                Process.Start("mailto:" + emailAddress + "?subject=" + betreff); 
+                Process.Start("mailto:" + emailAddress + "?subject=" + betreff);
             }
-            else if(Theme == "MPSS")
+            else if (Theme == "MPSS")
             {
                 var emailAddress = "plant3d@mpss.de";
                 var betreff = "Problem with SuCri - MPSS Extension";
@@ -154,5 +141,24 @@ namespace SuCri.Modul2.UI.Acad
         {
             Process.Start("https://www.sucri.de");
         }
+
+        private static readonly Type ControlType = typeof(MainView);
+        public string Theme
+        {
+            get => (string)GetValue(ThemeProperty);
+            set {
+                SetValue(ThemeProperty, value);
+                ResourceDictionary newRes = new ResourceDictionary();
+                newRes.Source = new Uri("pack://application:,,,/SuCri.Modul2.UI.Acad;component/Themes/" + value + ".xaml");
+                ResourceDictionary oldRes = this.Resources.MergedDictionaries[1];
+                this.Resources.MergedDictionaries.Remove(oldRes);
+                this.Resources.MergedDictionaries.Add(newRes);
+            }
+        }
+        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
+         nameof(Theme),
+         typeof(string),
+         ControlType,
+         new FrameworkPropertyMetadata("Sikla"));
     }
 }
