@@ -1,0 +1,49 @@
+﻿<Window
+    x:Class="SuCri.Modul2.Core.License.View.CompanyLicensesUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SuCri.Modul2.Core.License.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="clr-namespace:SuCri.Modul2.Core.License.ViewModel"
+    Title="Company Licenses"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <viewmodel:LicenseVM />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,20,20,30"
+            HorizontalAlignment="Left"
+            Visibility="{Binding LicenseIsValid}">
+            <TextBlock HorizontalAlignment="Left" Text="Customer Information" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Company Name: " />
+                    <TextBlock Text="Email: " />
+                    <TextBlock Text="Name: " />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Margin="10,0,0,0" Text="{Binding CompanyName}" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding Email}" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding Name}" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <DataGrid
+            Grid.Row="1"
+            ItemsSource="{Binding CustomerLicense}"
+            Visibility="{Binding LicenseIsValid}" />
+    </Grid>
+</Window>

@@ -283,7 +283,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
@@ -389,6 +389,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\MPSS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuCri.Modul2.Core.License\SuCri.Modul2.Core.License.csproj">
+      <Project>{3c6f3174-4be6-417c-ab67-82c67a1f7c3b}</Project>
+      <Name>SuCri.Modul2.Core.License</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

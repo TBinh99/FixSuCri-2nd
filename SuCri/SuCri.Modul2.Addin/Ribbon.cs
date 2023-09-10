@@ -19,6 +19,8 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.Internal.Reactors;
+using System.Linq;
 
 namespace SuCri.Modul2.Addin
 {
@@ -26,7 +28,6 @@ namespace SuCri.Modul2.Addin
     {
         private RibbonCombo _pan1Ribcombo1 = new RibbonCombo();
         private readonly RibbonCombo _pan3Ribcombo = new RibbonCombo();
-
 
         [CommandMethod("LoadSuCriRibbon")]
         public void MyRibbon()
@@ -53,9 +54,7 @@ namespace SuCri.Modul2.Addin
                     Source = panel1Panel
                 };
 
-
                 tab.Panels.Add(panel1);
-
 
                 var pan1Button1 = new RibbonButton
                 {
@@ -107,6 +106,32 @@ namespace SuCri.Modul2.Addin
                     Size = RibbonItemSize.Large,
                     CommandHandler = new RibbonCommandHandler(),
                     CommandParameter = "Palette",
+                };
+
+                var pan1Button5 = new RibbonButton
+                {
+                    Text = "LicenseInfo",
+                    ShowText = true,
+                    ShowImage = true,
+                    Image = Images.GetBitmap(Properties.Resources.License),
+                    LargeImage = Images.GetBitmap(Properties.Resources.License),
+                    Orientation = System.Windows.Controls.Orientation.Vertical,
+                    Size = RibbonItemSize.Large,
+                    CommandHandler = new RibbonCommandHandler(),
+                    CommandParameter = "LicenseForm",
+                };
+
+                var pan1Button6 = new RibbonButton
+                {
+                    Text = "CompanyLicensesInfo",
+                    ShowText = true,
+                    ShowImage = true,
+                    Image = Images.GetBitmap(Properties.Resources.CompanyLicenses),
+                    LargeImage = Images.GetBitmap(Properties.Resources.CompanyLicenses),
+                    Orientation = System.Windows.Controls.Orientation.Vertical,
+                    Size = RibbonItemSize.Large,
+                    CommandHandler = new RibbonCommandHandler(),
+                    CommandParameter = "CompanyLicenses",
                 };
 
                 //var panel2Panel = new RibbonPanelSource
@@ -171,6 +196,8 @@ namespace SuCri.Modul2.Addin
                 panel1Panel.Items.Add(pan1Button2);
                 //panel1Panel.Items.Add(pan1Button3);
                 panel1Panel.Items.Add(pan1Button4);
+                panel1Panel.Items.Add(pan1Button5);
+                panel1Panel.Items.Add(pan1Button6);
                 //panel3Panel.Items.Add(pan3Button1);
                 //panel1Panel.Items.Add(new RibbonSeparator());
                 //panel1Panel.Items.Add(pan1Row1);

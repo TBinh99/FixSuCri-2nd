@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SuCri.Modul2.UI.Acad.Properties {
+namespace SuCri.Modul2.Core.License.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,84 +26,108 @@ namespace SuCri.Modul2.UI.Acad.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsDarkMode {
+        public bool F1FeatureActive {
             get {
-                return ((bool)(this["IsDarkMode"]));
+                return ((bool)(this["F1FeatureActive"]));
             }
             set {
-                this["IsDarkMode"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("German")]
-        public string Language {
-            get {
-                return ((string)(this["Language"]));
-            }
-            set {
-                this["Language"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
-        public double WinTopPosition {
-            get {
-                return ((double)(this["WinTopPosition"]));
-            }
-            set {
-                this["WinTopPosition"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
-        public double WinLeftPosition {
-            get {
-                return ((double)(this["WinLeftPosition"]));
-            }
-            set {
-                this["WinLeftPosition"] = value;
+                this["F1FeatureActive"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsProjectMode {
+        public bool F2FeatureActive {
             get {
-                return ((bool)(this["IsProjectMode"]));
+                return ((bool)(this["F2FeatureActive"]));
             }
             set {
-                this["IsProjectMode"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sikla")]
-        public string Theme {
-            get {
-                return ((string)(this["Theme"]));
-            }
-            set {
-                this["Theme"] = value;
+                this["F2FeatureActive"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsRegisterCmdDone {
+        public bool F3FeatureActive {
             get {
-                return ((bool)(this["IsRegisterCmdDone"]));
+                return ((bool)(this["F3FeatureActive"]));
             }
             set {
-                this["IsRegisterCmdDone"] = value;
+                this["F3FeatureActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool F4FeatureActive {
+            get {
+                return ((bool)(this["F4FeatureActive"]));
+            }
+            set {
+                this["F4FeatureActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool F5FeatureActive {
+            get {
+                return ((bool)(this["F5FeatureActive"]));
+            }
+            set {
+                this["F5FeatureActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool F6FeatureActive {
+            get {
+                return ((bool)(this["F6FeatureActive"]));
+            }
+            set {
+                this["F6FeatureActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool F7FeatureActive {
+            get {
+                return ((bool)(this["F7FeatureActive"]));
+            }
+            set {
+                this["F7FeatureActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool F8FeatureActive {
+            get {
+                return ((bool)(this["F8FeatureActive"]));
+            }
+            set {
+                this["F8FeatureActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LicenseKey {
+            get {
+                return ((string)(this["LicenseKey"]));
+            }
+            set {
+                this["LicenseKey"] = value;
             }
         }
     }

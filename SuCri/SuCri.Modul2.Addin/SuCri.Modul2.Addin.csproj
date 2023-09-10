@@ -78,6 +78,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SuCri.Modul2.Core.License\SuCri.Modul2.Core.License.csproj">
+      <Project>{3c6f3174-4be6-417c-ab67-82c67a1f7c3b}</Project>
+      <Name>SuCri.Modul2.Core.License</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SuCri.Modul2.UI.Acad\SuCri.Modul2.UI.Acad.csproj">
       <Project>{68f12ccc-b29d-46a7-b8ec-62fa4d4cd563}</Project>
       <Name>SuCri.Modul2.UI.Acad</Name>
@@ -134,6 +138,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\MPSS.png" />
+    <None Include="Resources\License.png" />
+    <None Include="Resources\CompanyLicenses.png" />
     <Content Include="Resources\SiklaImage.png" />
   </ItemGroup>
   <ItemGroup>

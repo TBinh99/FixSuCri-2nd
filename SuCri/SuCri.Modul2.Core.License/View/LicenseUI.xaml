@@ -1,0 +1,143 @@
+﻿<Window
+    x:Class="SuCri.Modul2.Core.License.View.LicenseUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:SuCri.Modul2.Core.License.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="clr-namespace:SuCri.Modul2.Core.License.ViewModel"
+    Title="Active License Key"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadLicenseCmd}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.DataContext>
+        <viewmodel:LicenseVM />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,20,20,30"
+            HorizontalAlignment="Right"
+            Visibility="{Binding LicenseIsValid}">
+            <TextBlock HorizontalAlignment="Left" Text="Customer Information" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Company Name: " />
+                    <TextBlock Text="Email: " />
+                    <TextBlock Text="Name: " />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Margin="10,0,0,0" Text="{Binding CompanyName}" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding Email}" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding Name}" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <TextBox
+                Width="500"
+                Height="30"
+                VerticalContentAlignment="Center"
+                Text="{Binding LicenseKey}" />
+            <Button
+                Height="30"
+                Command="{Binding CheckLicenseCmd}"
+                Content="Check license" />
+        </StackPanel>
+        <TextBlock
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            Text="{Binding LicenseKeyStatus}" />
+        <Grid
+            Grid.Row="3"
+            Margin="100,20,20,30"
+            Visibility="{Binding LicenseIsValid}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="F1 Feature :" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding F1Feature}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="F2 Feature :" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding F2Feature}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="F3 Feature :" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding F3Feature}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="F4 Feature :" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding F4Feature}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="F5 Feature :" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding F5Feature}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="F6 Feature :" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding F6Feature}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="F7 Feature :" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding F7Feature}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="F8 Feature :" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding F8Feature}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Activated Marchine" />
+                        <TextBlock Text="Created" />
+                        <TextBlock Text="Expires" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Margin="10,0,0,0" Text="{Binding ActivatedMachines}" />
+                        <TextBlock Margin="10,0,0,0" Text="{Binding CreatedDate}" />
+                        <TextBlock Margin="10,0,0,0" Text="{Binding ExpiresDate}" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+        </Grid>
+        <Button
+            Grid.Row="4"
+            Width="180"
+            Height="30"
+            Margin="0,10,10,10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Command="{Binding DeleteLicenseCmd}"
+            Content="Delete License On Device" />
+    </Grid>
+</Window>

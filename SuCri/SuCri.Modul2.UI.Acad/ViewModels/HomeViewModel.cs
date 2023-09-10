@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 namespace SuCri.Modul2.UI.Acad.ViewModels
@@ -121,19 +122,23 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
 
         private void ExecuteAttachCompCommand(System.Windows.Window p)
         {
-            p.Hide();
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc == null)
-                return;
-            string commandToExcute = "Test";
-            doc.CommandCancelled += (sender, e) => doc_CommandHandler(sender, e, p, commandToExcute);
-            doc.CommandEnded += (sender, e) => doc_CommandHandler(sender, e, p, commandToExcute);
+            if (CheckLicense("F2FeatureActive"))
+            {
+                p.Hide();
+                Document doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
+                if (doc == null)
+                    return;
+                string commandToExcute = "Test";
+                doc.CommandCancelled += (sender, e) => doc_CommandHandler(sender, e, p, commandToExcute);
+                doc.CommandEnded += (sender, e) => doc_CommandHandler(sender, e, p, commandToExcute);
 
-            doc.SendStringToExecute(commandToExcute, true, false, false);
-            //Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
-            //doc.SendStringToExecute("_.AttachSupport\n", true, false, false);
-            //Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
+                doc.SendStringToExecute(commandToExcute, true, false, false);
+                //Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
+                //doc.SendStringToExecute("_.AttachSupport\n", true, false, false);
+                //Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
+            }
         }
+
         static void doc_CommandHandler(object sender, CommandEventArgs e, System.Windows.Window p, string commandName)
         {
             if (e.GlobalCommandName == commandName.ToUpper())
@@ -145,42 +150,57 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
         {
             Application.DocumentManager.MdiActiveDocument.CommandCancelled -= (sender1, e1) => MdiActiveDocument_CommandCancelled(sender1, e1, p);
         }
+        private bool CheckLicense(string featureName)
+        {
+            if ((bool)Core.License.Properties.Settings.Default[featureName])
+            {
+                return true;
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show($"Feature is not active");
+                return false;
+            }
+        }
         private void ExecuteSelectSUCommand(object obj)
         {
-
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc == null)
-                return;
-            doc.SendStringToExecute("_.SelectSupport\n", true, false, false);
+            if (CheckLicense("F1FeatureActive")) 
+            {
+                Document doc = Application.DocumentManager.MdiActiveDocument;
+                if (doc == null)
+                    return;
+                doc.SendStringToExecute("_.SelectSupport\n", true, false, false);
+            }
         }
 
         private void ExecuteDetachCompCommand(object obj)
         {
-
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc == null)
-                return;
-            doc.SendStringToExecute("_.DetachSupport\n", true, false, false);
+            if (CheckLicense("F3FeatureActive"))
+            {
+                Document doc = Application.DocumentManager.MdiActiveDocument;
+                if (doc == null)
+                    return;
+                doc.SendStringToExecute("_.DetachSupport\n", true, false, false);
+            }
         }
 
         private void ExecuteGetXDataCommand(object obj)
         {
-
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc == null)
-                return;
-            doc.SendStringToExecute("_.SupportXdata\n", true, false, false);
-
+            if (CheckLicense("F4FeatureActive"))
+            {
+                Document doc = Application.DocumentManager.MdiActiveDocument;
+                if (doc == null)
+                    return;
+                doc.SendStringToExecute("_.SupportXdata\n", true, false, false);
+            }
         }
 
         private void ExecuteExportBOMDWGCommand(object obj)
         {
-
             Document doc = Application.DocumentManager.MdiActiveDocument;
             if (doc == null)
                 return;
             doc.SendStringToExecute("_.GET_REPORT_ACTIVE_DRAWING\n", true, false, false);
-
         }
         private void ExecuteLoadMTOFilterCommand(object obj)
         {
