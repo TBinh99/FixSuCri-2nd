@@ -58,7 +58,7 @@
                 Width="500"
                 Height="30"
                 VerticalContentAlignment="Center"
-                Text="{Binding LicenseKey}" />
+                Text="{Binding LicenseKeyInput}" />
             <Button
                 Height="30"
                 Command="{Binding CheckLicenseCmd}"

@@ -65,6 +65,7 @@
     <Compile Include="View\LicenseUI.xaml.cs">
       <DependentUpon>LicenseUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WTLicenseKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

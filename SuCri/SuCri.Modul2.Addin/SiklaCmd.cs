@@ -248,6 +248,7 @@ namespace SuCri.Modul2.Addin
         [CommandMethod("CompanyLicensesForm")]
         public void CompanyLicensesForm()
         {
+            var test = Core.License.Properties.Settings.Default;
             PaletteSingleton.Hide();
             if (licenseVM == null || string.IsNullOrEmpty(Core.License.Properties.Settings.Default.LicenseKey))
             {
