@@ -24,5 +24,13 @@ namespace SuCri.Modul2.Core.License.View
         {
             InitializeComponent();
         }
+
+        private void DG1_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.Column.Header.ToString() == "Status")
+            {
+                e.Column.Visibility = Visibility.Hidden;
+            }
+        }
     }
 }

@@ -41,7 +41,6 @@ namespace SuCri.Modul2.Core.License.ViewModel
         public string ActivatedMachines { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ExpiresDate { get; set; }
-        public List<CustomerLicenseInfo> CustomerLicense { get; set; }
         void DeleteLicense() 
         {
             LicenseKeyInput = "";
@@ -69,7 +68,6 @@ namespace SuCri.Modul2.Core.License.ViewModel
                 }
                 else
                 {
-                    Properties.Settings.Default.Reset();
                     LicenseKeyStatus = "Your license key has expired";
                     F1Feature = "None";
                     F2Feature = "None";
@@ -80,30 +78,22 @@ namespace SuCri.Modul2.Core.License.ViewModel
                     F7Feature = "None"; 
                     F8Feature = "None";
                 }
-                Properties.Settings.Default.LicenseKey = licenseKey.Key;
-                Properties.Settings.Default.Save();
                 LicenseIsValid = Visibility.Visible;
-
-                if (WTLicenseKey.Instance.HaveCustomerInfomation) 
+                if (WTLicenseKey.Instance.HaveCustomerInfomation)
                 {
                     CompanyName = licenseKey.Customer.CompanyName;
                     Email = licenseKey.Customer.Email;
                     Name = licenseKey.Customer.Name;
-                    ActivatedMachines = licenseKey.ActivatedMachines.Count().ToString();
-                    CreatedDate = licenseKey.Created;
-                    ExpiresDate = licenseKey.Expires;
-                    CustomerLicense = WTLicenseKey.Instance.CustomerLicense;
                 }
-                else 
+                else
                 {
                     CompanyName = "None";
                     Email = "None";
                     Name = "None";
-                    ActivatedMachines = "None";
-                    CreatedDate = DateTime.MinValue;
-                    ExpiresDate = DateTime.MinValue;
-                    CustomerLicense = new List<CustomerLicenseInfo>();
                 }
+                ActivatedMachines = licenseKey.ActivatedMachines.Count().ToString();
+                CreatedDate = licenseKey.Created;
+                ExpiresDate = licenseKey.Expires;
             }
             else 
             {
@@ -112,7 +102,6 @@ namespace SuCri.Modul2.Core.License.ViewModel
                 { 
                     LicenseKeyStatus = "Your license key does not exist"; 
                 }
-
             }
         }
         void CheckLicense()

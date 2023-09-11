@@ -15,6 +15,7 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using SuCri.Modul2.Core.License.View;
 using SuCri.Modul2.Core.License.ViewModel;
+using SuCri.Modul2.Core.License;
 
 [assembly: CommandClass(typeof(SuCri.Modul2.Addin.SiklaCmd))]
 
@@ -230,33 +231,28 @@ namespace SuCri.Modul2.Addin
             editor.WriteMessage("Line created successfully.\n");
         }
 
-        private static LicenseVM licenseVM { get; set; }
-
         [CommandMethod("LicenseForm")]
         public void LicenseForm()
         {
             PaletteSingleton.Hide();
-            if(licenseVM == null) 
-            {
-                licenseVM = new LicenseVM();
-            }
-
             LicenseUI ui = new LicenseUI();
-            ui.DataContext = licenseVM;
             ui.Show();
         }
         [CommandMethod("CompanyLicensesForm")]
         public void CompanyLicensesForm()
         {
-            var test = Core.License.Properties.Settings.Default;
             PaletteSingleton.Hide();
-            if (licenseVM == null || string.IsNullOrEmpty(Core.License.Properties.Settings.Default.LicenseKey))
+            if (!WTLicenseKey.Instance.IsValidKey || WTLicenseKey.Instance.LicenseKey == null)
             {
                 System.Windows.MessageBox.Show("Please open license first");
                 return;
             }
+            if (!WTLicenseKey.Instance.HaveCustomerInfomation)
+            {
+                System.Windows.MessageBox.Show("No customer information found");
+                return;
+            }
             CompanyLicensesUI ui = new CompanyLicensesUI();
-            ui.DataContext = licenseVM;
             ui.Show();
         }
         //private void RegisterHaleyThemes()

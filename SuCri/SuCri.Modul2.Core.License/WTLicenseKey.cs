@@ -16,7 +16,6 @@ namespace SuCri.Modul2.Core.License
         public WTLicenseKey()
         {
         }
-
         public static WTLicenseKey _instance { get; set; }
         public static WTLicenseKey Instance
         {
@@ -30,6 +29,9 @@ namespace SuCri.Modul2.Core.License
             }
         }
         public LicenseKey LicenseKey { get; set; }
+        public bool IsValidKey { get; set; }
+        public bool HaveCustomerInfomation { get; set; }
+        public List<CustomerLicenseInfo> CustomerLicense { get; set; }
         public void CheckLicenseKey(string keyInput)
         {
             var RSAPubKey = "<RSAKeyValue><Modulus>kWSSWcUTKvwvZRtCRrSY0ImORR1C9T2Oduhxq5P2BzT74zOPFef1V4Wx3Z93zZhgdYpLl1bG9wF+IIc1ppfbLs+dH6H37bWaiejny2MVVHYwZ/D5YA3P1tKmlnSoH7BbIozybCXT4ww+6WEduWguolBHbdAeb8GHz2YdFx2JjZZFghFzpd/xEu+GUDrxyuiFAH+rQ9/SZ2qMaB5LhuCZCbeuz71tKHY+rODO+0FXnhs+kaSZSEDsgaIuTAd1a/vfuMNWZ2Cnun3guVaDMvXJa4AUy7RaG4YQrCJSsqbnnCO0n/kLnLoPx2dm0A11xgzNwJN0OQBetv/O6HNEoME93Q==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
@@ -69,12 +71,10 @@ namespace SuCri.Modul2.Core.License
                 {
                     Properties.Settings.Default.Reset();
                 }
+                Properties.Settings.Default.LicenseKey = LicenseKey.Key;
                 Properties.Settings.Default.Save();
             }
         }
-        public bool IsValidKey { get; set; }
-        public bool HaveCustomerInfomation { get; set; }
-        public List<CustomerLicenseInfo> CustomerLicense { get; set; }
         private void CheckCompanyLicenses(LicenseKey licenseKeyInput)
         {
             if(licenseKeyInput.Customer != null) 
@@ -87,7 +87,7 @@ namespace SuCri.Modul2.Core.License
                 CustomerLicense = new List<CustomerLicenseInfo>();
                 foreach (var licenseInfo in customerLicenses.LicenseKeys)
                 {
-                    CustomerLicense.Add(new CustomerLicenseInfo() { Valid_License_Keys = licenseInfo.Key, Expiration_Date = licenseInfo.Expires, Machines = $"{licenseInfo.ActivatedMachines.Count()}/{licenseInfo.MaxNoOfMachines}", Status = $"{(licenseInfo.Period < 0 ? "Red" : (licenseInfo.Period < 14) ? "Blue" : "Green")}" });
+                    CustomerLicense.Add(new CustomerLicenseInfo() { Valid_License_Keys = licenseInfo.Key, Expiration_Date = licenseInfo.Expires, Machines = $"{licenseInfo.ActivatedMachines.Count()}/{licenseInfo.MaxNoOfMachines}", Status = $"{(licenseInfo.Period == 0 ? "Red" : (licenseInfo.Period < 14) ? "Orange" : "Green")}" });
                 }
             }
             else 

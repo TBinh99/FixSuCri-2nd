@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:SuCri.Modul2.Core.License.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:SuCri.Modul2.Core.License.ViewModel"
@@ -11,8 +12,13 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Window.DataContext>
-        <viewmodel:LicenseVM />
+        <viewmodel:CompanyLicensesVM />
     </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCompanyLicensesCmd}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -21,8 +27,7 @@
         <StackPanel
             Grid.Row="0"
             Margin="0,20,20,30"
-            HorizontalAlignment="Left"
-            Visibility="{Binding LicenseIsValid}">
+            HorizontalAlignment="Left">
             <TextBlock HorizontalAlignment="Left" Text="Customer Information" />
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -43,7 +48,48 @@
         </StackPanel>
         <DataGrid
             Grid.Row="1"
-            ItemsSource="{Binding CustomerLicense}"
-            Visibility="{Binding LicenseIsValid}" />
+            HorizontalAlignment="Left"
+            AutoGenerateColumns="False"
+            Background="Transparent"
+            CanUserAddRows="False"
+            ItemsSource="{Binding CustomerLicense}">
+            <DataGrid.Columns>
+                <!--  Other columns here  -->
+                <DataGridTemplateColumn Width="2*" Header="Valid License Keys">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Valid_License_Keys}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*" Header="Expiration Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Expiration_Date}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Machines">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Machines}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!--  Status column with the circle  -->
+                <DataGridTemplateColumn Header="Status">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Ellipse
+                                Width="16"
+                                Height="16"
+                                Fill="{Binding Status}"
+                                Stroke="Black"
+                                StrokeThickness="1" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

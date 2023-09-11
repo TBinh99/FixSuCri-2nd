@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="Model\LicenseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CompanyLicensesVM.cs" />
     <Compile Include="ViewModel\LicenseVM.cs" />
     <Compile Include="View\CompanyLicensesUI.xaml.cs">
       <DependentUpon>CompanyLicensesUI.xaml</DependentUpon>
