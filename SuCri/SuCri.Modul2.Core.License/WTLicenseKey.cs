@@ -87,7 +87,7 @@ namespace SuCri.Modul2.Core.License
                 CustomerLicense = new List<CustomerLicenseInfo>();
                 foreach (var licenseInfo in customerLicenses.LicenseKeys)
                 {
-                    CustomerLicense.Add(new CustomerLicenseInfo() { Valid_License_Keys = licenseInfo.Key, Expiration_Date = licenseInfo.Expires, Machines = $"{licenseInfo.ActivatedMachines.Count()}/{licenseInfo.MaxNoOfMachines}", Status = $"{(licenseInfo.Period == 0 ? "Red" : (licenseInfo.Period < 14) ? "Orange" : "Green")}" });
+                    CustomerLicense.Add(new CustomerLicenseInfo() { ValidLicenseKeys = licenseInfo.Key, ExpirationDate = licenseInfo.Expires, Machines = $"{licenseInfo.ActivatedMachines.Count()}/{licenseInfo.MaxNoOfMachines}", Status = $"{(licenseInfo.Period == 0 ? "Red" : (licenseInfo.Period < 14) ? "Orange" : "Green")}" });
                 }
             }
             else 

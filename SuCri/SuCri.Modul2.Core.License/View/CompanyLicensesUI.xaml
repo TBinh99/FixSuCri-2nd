@@ -58,14 +58,14 @@
                 <DataGridTemplateColumn Width="2*" Header="Valid License Keys">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Valid_License_Keys}" />
+                            <TextBlock Text="{Binding ValidLicenseKeys}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="*" Header="Expiration Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Expiration_Date}" />
+                            <TextBlock Text="{Binding ExpirationDate}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
