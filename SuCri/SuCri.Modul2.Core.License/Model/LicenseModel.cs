@@ -16,4 +16,15 @@ namespace SuCri.Modul2.Core.License.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
+    public enum FeatureOption
+    {
+        F1FeatureActive,
+        F2FeatureActive,
+        F3FeatureActive,
+        F4FeatureActive,
+        F5FeatureActive,
+        F6FeatureActive,
+        F7FeatureActive,
+        F8FeatureActive
+    }
 }

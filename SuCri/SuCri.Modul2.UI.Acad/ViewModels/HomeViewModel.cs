@@ -3,6 +3,7 @@ using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Windows.AcadDM;
 using Autodesk.AutoCAD.Windows.Data;
 using CommunityToolkit.Mvvm.Input;
+using SuCri.Modul2.Core.License.Model;
 using SuCri.Modul2.UI.Acad.Utils;
 using System;
 using System.Collections.Generic;
@@ -122,7 +123,7 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
 
         private void ExecuteAttachCompCommand(System.Windows.Window p)
         {
-            if (CheckLicense("F2FeatureActive"))
+            if (CheckLicense(FeatureOption.F2FeatureActive))
             {
                 p.Hide();
                 Document doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
@@ -150,9 +151,9 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
         {
             Application.DocumentManager.MdiActiveDocument.CommandCancelled -= (sender1, e1) => MdiActiveDocument_CommandCancelled(sender1, e1, p);
         }
-        private bool CheckLicense(string featureName)
+        private bool CheckLicense(FeatureOption featureName)
         {
-            if ((bool)Core.License.Properties.Settings.Default[featureName])
+            if ((bool)Core.License.Properties.Settings.Default[featureName.ToString()])
             {
                 return true;
             }
@@ -164,7 +165,7 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
         }
         private void ExecuteSelectSUCommand(object obj)
         {
-            if (CheckLicense("F1FeatureActive")) 
+            if (CheckLicense(FeatureOption.F1FeatureActive)) 
             {
                 Document doc = Application.DocumentManager.MdiActiveDocument;
                 if (doc == null)
@@ -175,7 +176,7 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
 
         private void ExecuteDetachCompCommand(object obj)
         {
-            if (CheckLicense("F3FeatureActive"))
+            if (CheckLicense(FeatureOption.F3FeatureActive))
             {
                 Document doc = Application.DocumentManager.MdiActiveDocument;
                 if (doc == null)
@@ -186,7 +187,7 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
 
         private void ExecuteGetXDataCommand(object obj)
         {
-            if (CheckLicense("F4FeatureActive"))
+            if (CheckLicense(FeatureOption.F4FeatureActive))
             {
                 Document doc = Application.DocumentManager.MdiActiveDocument;
                 if (doc == null)
