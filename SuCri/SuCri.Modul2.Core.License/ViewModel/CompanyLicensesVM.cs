@@ -39,20 +39,20 @@ namespace SuCri.Modul2.Core.License.ViewModel
         public string Email { get; set; }
         public string Name { get; set; }
         public string CustomerSecertInput { get; set; }
-        public string CompanyLicenseStatus { get; set; }
+        public string CompanyLicenseMessage { get; set; }
         public List<CustomerLicenseInfo> CustomerLicense { get; set; }
         public ICommand LoadCompanyLicensesCmd => new RelayCommand(LoadCompanyLicenses);
         public ICommand GetCompanyLicenseCmd => new RelayCommand(GetCompanyLicense);
         public ICommand DeleteCustomerCmd => new RelayCommand(DeleteCustomer);
-        public ICommand ActiveKeyCmd => new RelayCommand<string>(ActiveKey);
+        public ICommand ActiveKeyCmd => new RelayCommand<CustomerLicenseInfo>(ActiveKey);
         public ICommand DeactiveKeyCmd => new RelayCommand(DeactiveKey);
-        public int StatusIndex { get; set; } = 0;
 
         void GetCompanyLicense() 
         {
             if(!string.IsNullOrEmpty(CustomerSecertInput))
             {
                 WTLicenseKey.Instance.GetCompanyLicenses(CustomerSecertInput);
+                CompanyLicenseMessage = WTLicenseKey.Instance.CompanyLicensesMessage;
             }
         }
         void LoadCompanyLicenses()
@@ -96,9 +96,10 @@ namespace SuCri.Modul2.Core.License.ViewModel
             WTLicenseKey.Instance.DeleteCompanyLicenses();
         }
 
-        void ActiveKey(string licenseKey) 
+        void ActiveKey(CustomerLicenseInfo license) 
         {
-            WTLicenseKey.Instance.ActiveLicenseKey(licenseKey);
+            int productId = WTLicenseKey.Instance.ProductsInfo.Products.First(x => x.Name == license.ProductName).Id;
+            WTLicenseKey.Instance.ActiveLicenseKey(license.ValidLicenseKeys, productId);
         }
         void DeactiveKey()
         {

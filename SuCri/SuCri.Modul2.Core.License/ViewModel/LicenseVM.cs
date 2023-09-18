@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.Input;
 using SuCri.Modul2.Core.License.Model;
 using Autodesk.Windows;
 using static System.Net.Mime.MediaTypeNames;
+using SuCri.Modul2.Core.License.View;
 
 namespace SuCri.Modul2.Core.License.ViewModel
 {
@@ -37,9 +38,18 @@ namespace SuCri.Modul2.Core.License.ViewModel
         {
             LoadLicense();
         }
-        public string Test { get; set; }
+
+        public List<string> ListProductName 
+        { 
+            get 
+            {
+                return WTLicenseKey.Instance.ProductsInfo.Products.Select(x => x.Name).ToList(); 
+            }
+        }
+        public string ProductName { get; set; }
+
         public string LicenseKeyInput { get; set; }
-        public string LicenseKeyStatus { get; set; }
+        public string LicenseKeyMessage { get; set; }
         public string F1Feature { get; set; }
         public string F2Feature { get; set; }
         public string F3Feature { get; set; }
@@ -56,20 +66,20 @@ namespace SuCri.Modul2.Core.License.ViewModel
         public DateTime ExpiresDate { get; set; }
         void DeleteLicense() 
         {
-            LicenseKeyInput = "";
-            LicenseKeyStatus = "";
             WTLicenseKey.Instance.DeactiveKey();
             LicenseIsValid = Visibility.Hidden;
         }
         void LoadLicense() 
         {
-            if (WTLicenseKey.Instance.LicenseKey != null) 
+            var test = WTLicenseKey.Instance;
+            if (WTLicenseKey.Instance.LicenseKeyStatus == ResultType.Success)
             {
+                LicenseIsValid = Visibility.Visible;
                 LicenseKeyInput = WTLicenseKey.Instance.LicenseKey.Key;
                 LicenseKey licenseKey = WTLicenseKey.Instance.LicenseKey;
                 if (licenseKey.Period > 0)
                 {
-                    LicenseKeyStatus = "Your license key has been activated";
+                    LicenseKeyMessage = "Your license key has been activated";
                     F1Feature = licenseKey.F1 ? "Active" : "None";
                     F2Feature = licenseKey.F2 ? "Active" : "None";
                     F3Feature = licenseKey.F3 ? "Active" : "None";
@@ -81,7 +91,7 @@ namespace SuCri.Modul2.Core.License.ViewModel
                 }
                 else
                 {
-                    LicenseKeyStatus = "Your license key has expired";
+                    LicenseKeyMessage = "Your license key has expired";
                     F1Feature = "None";
                     F2Feature = "None";
                     F3Feature = "None";
@@ -91,7 +101,6 @@ namespace SuCri.Modul2.Core.License.ViewModel
                     F7Feature = "None"; 
                     F8Feature = "None";
                 }
-                LicenseIsValid = Visibility.Visible;
                 if (licenseKey.Customer != null)
                 {
                     CompanyName = licenseKey.Customer.CompanyName;
@@ -107,26 +116,43 @@ namespace SuCri.Modul2.Core.License.ViewModel
                 ActivatedMachines = licenseKey.ActivatedMachines.Count().ToString();
                 CreatedDate = licenseKey.Created;
                 ExpiresDate = licenseKey.Expires;
+                ProductName = WTLicenseKey.Instance.ProductsInfo.Products.First(x => x.Id == licenseKey.ProductId).Name;
             }
             else
             {
                 LicenseIsValid = Visibility.Hidden;
-                LicenseKeyInput = "";
-                LicenseKeyStatus = "";
+                if (WTLicenseKey.Instance.LicenseKey == null)
+                {
+                    LicenseKeyInput = "";
+                    LicenseKeyMessage = "";
+                    ProductName = null;
+                }
+                else 
+                {
+                    if(WTLicenseKey.Instance.LicenseKey.Key == LicenseKeyInput)
+                    {
+                        LicenseKeyInput = WTLicenseKey.Instance.LicenseKey.Key;
+                        ProductName = WTLicenseKey.Instance.ProductsInfo.Products.First(x => x.Id == WTLicenseKey.Instance.LicenseKey.ProductId).Name;
+                    }
+                    else
+                    {
+                        LicenseKeyMessage = "Your license key is not valid";
+                    }
+                }
             }
         }
         void ActiveLicense()
         {
             if (LicenseKeyInput != null) 
             {
-                WTLicenseKey.Instance.ActiveLicenseKey(LicenseKeyInput);
-                if (WTLicenseKey.Instance.LicenseKey == null)
+                if (string.IsNullOrEmpty(ProductName))
                 {
-                    LicenseIsValid = Visibility.Hidden;
-                    if (!string.IsNullOrEmpty(LicenseKeyInput))
-                    {
-                        LicenseKeyStatus = "Your license key does not exist";
-                    }
+                    LicenseKeyMessage = "Please select product";
+                }
+                else 
+                {
+                    int productId = WTLicenseKey.Instance.ProductsInfo.Products.First(x => x.Name == ProductName).Id;
+                    WTLicenseKey.Instance.ActiveLicenseKey(LicenseKeyInput, productId);
                 }
             }
         }

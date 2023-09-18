@@ -29,7 +29,10 @@
             <RowDefinition />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <StackPanel
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <TextBox
                     Width="500"
@@ -38,14 +41,12 @@
                     Text="{Binding CustomerSecertInput}" />
                 <Button
                     Height="30"
+                    Margin="5,0,0,0"
                     Command="{Binding GetCompanyLicenseCmd}"
                     Content="Get Compay Infomation" />
             </StackPanel>
-            <TextBlock
-                Grid.Row="2"
-                HorizontalAlignment="Center"
-                Text="{Binding CompanyLicenseStatus}" />
-        </Grid>
+            <TextBlock HorizontalAlignment="Center" Text="{Binding CompanyLicenseMessage}" />
+        </StackPanel>
         <StackPanel
             Grid.Row="1"
             Margin="0,0,0,10"
@@ -116,7 +117,7 @@
                                     VerticalContentAlignment="Center"
                                     BorderThickness="0"
                                     Command="{Binding DataContext.ActiveKeyCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
-                                    CommandParameter="{Binding ValidLicenseKeys}"
+                                    CommandParameter="{Binding}"
                                     Content="Active Key" />
                                 <Button
                                     HorizontalContentAlignment="Center"

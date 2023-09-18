@@ -54,20 +54,29 @@
             Grid.Row="1"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
+            <ComboBox
+                Width="150"
+                Height="30"
+                VerticalContentAlignment="Center"
+                ItemsSource="{Binding ListProductName}"
+                SelectedItem="{Binding ProductName}" />
             <TextBox
                 Width="500"
                 Height="30"
+                Margin="5,0,5,0"
                 VerticalContentAlignment="Center"
                 Text="{Binding LicenseKeyInput}" />
             <Button
                 Height="30"
                 Command="{Binding ActiveLicenseCmd}"
                 Content="Active license" />
+
+
         </StackPanel>
         <TextBlock
             Grid.Row="2"
             HorizontalAlignment="Center"
-            Text="{Binding LicenseKeyStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding LicenseKeyMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Grid
             Grid.Row="3"
             Margin="100,20,20,30"
