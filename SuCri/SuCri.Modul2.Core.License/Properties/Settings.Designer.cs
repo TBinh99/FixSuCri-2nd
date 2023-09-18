@@ -130,5 +130,17 @@ namespace SuCri.Modul2.Core.License.Properties {
                 this["LicenseKey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CustomerSecret {
+            get {
+                return ((string)(this["CustomerSecret"]));
+            }
+            set {
+                this["CustomerSecret"] = value;
+            }
+        }
     }
 }

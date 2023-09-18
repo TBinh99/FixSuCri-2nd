@@ -242,16 +242,6 @@ namespace SuCri.Modul2.Addin
         public void CompanyLicensesForm()
         {
             PaletteSingleton.Hide();
-            if (!WTLicenseKey.Instance.IsValidKey || WTLicenseKey.Instance.LicenseKey == null)
-            {
-                System.Windows.MessageBox.Show("Please open license first");
-                return;
-            }
-            if (!WTLicenseKey.Instance.HaveCustomerInfomation)
-            {
-                System.Windows.MessageBox.Show("No customer information found");
-                return;
-            }
             CompanyLicensesUI ui = new CompanyLicensesUI();
             ui.Show();
         }

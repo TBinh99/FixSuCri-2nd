@@ -61,8 +61,8 @@
                 Text="{Binding LicenseKeyInput}" />
             <Button
                 Height="30"
-                Command="{Binding CheckLicenseCmd}"
-                Content="Check license" />
+                Command="{Binding ActiveLicenseCmd}"
+                Content="Active license" />
         </StackPanel>
         <TextBlock
             Grid.Row="2"

@@ -11,6 +11,9 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <Window.Resources>
+        <viewmodel:TypeToVisibilityConverter x:Key="TypeToVisibilityConverter" />
+    </Window.Resources>
     <Window.DataContext>
         <viewmodel:CompanyLicensesVM />
     </Window.DataContext>
@@ -21,12 +24,31 @@
     </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="auto" />
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBox
+                    Width="500"
+                    Height="30"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding CustomerSecertInput}" />
+                <Button
+                    Height="30"
+                    Command="{Binding GetCompanyLicenseCmd}"
+                    Content="Get Compay Infomation" />
+            </StackPanel>
+            <TextBlock
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                Text="{Binding CompanyLicenseStatus}" />
+        </Grid>
         <StackPanel
-            Grid.Row="0"
-            Margin="0,20,20,30"
+            Grid.Row="1"
+            Margin="0,0,0,10"
             HorizontalAlignment="Left">
             <TextBlock HorizontalAlignment="Left" Text="Customer Information" />
             <Grid>
@@ -47,11 +69,13 @@
             </Grid>
         </StackPanel>
         <DataGrid
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Left"
             AutoGenerateColumns="False"
             Background="Transparent"
+            BorderThickness="0"
             CanUserAddRows="False"
+            ColumnWidth="*"
             ItemsSource="{Binding CustomerLicense}">
             <DataGrid.Columns>
                 <!--  Other columns here  -->
@@ -62,22 +86,51 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="*" Header="Expiration Date">
+                <DataGridTemplateColumn Width="1.5*" Header="Product">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ProductName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="1*" Header="Expiration Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding ExpirationDate}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Machines">
+                <DataGridTemplateColumn Width="70" Header="Machines">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Machines}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="100" Header="Active/Deactive">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Button
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    BorderThickness="0"
+                                    Command="{Binding DataContext.ActiveKeyCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                    CommandParameter="{Binding ValidLicenseKeys}"
+                                    Content="Active Key" />
+                                <Button
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    BorderThickness="0"
+                                    Command="{Binding DataContext.DeactiveKeyCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                    Content="Deactive Key"
+                                    Visibility="{Binding ValidLicenseKeys, Converter={StaticResource TypeToVisibilityConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <!--  Status column with the circle  -->
-                <DataGridTemplateColumn Header="Status">
+                <DataGridTemplateColumn Width="50" Header="Status">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Ellipse
@@ -91,5 +144,14 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Button
+            Grid.Row="4"
+            Width="180"
+            Height="30"
+            Margin="0,10,10,10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Command="{Binding DeleteCustomerCmd}"
+            Content="Delete Customer On Device" />
     </Grid>
 </Window>

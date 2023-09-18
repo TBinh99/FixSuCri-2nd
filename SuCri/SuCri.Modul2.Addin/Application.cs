@@ -1,6 +1,7 @@
 ﻿using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
+using SuCri.Modul2.Core.License;
 using SuCri.Modul2.Core.License.View;
 using System;
 using System.IO;
@@ -19,12 +20,8 @@ namespace SuCri.Modul2.Addin
             LoadRefFiles();
            
             new Ribbon().MyRibbon();
-            var license = Core.License.WTLicenseKey.Instance;
-            
-            if (!string.IsNullOrEmpty(Core.License.Properties.Settings.Default.LicenseKey)) 
-            {
-                Core.License.WTLicenseKey.Instance.CheckLicenseKey(Core.License.Properties.Settings.Default.LicenseKey);
-            }
+
+            new WTLicenseKey();
             //OverruleStartUp overruleStartUp = new OverruleStartUp();
             //overruleStartUp.LockLayerCommand();
         }

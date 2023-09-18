@@ -19,12 +19,12 @@ namespace SuCri.Modul2.Core.License.ViewModel
     public class LicenseVM : INotifyPropertyChanged
     {
         public LicenseVM() { }
-        public ICommand CheckLicenseCmd => new RelayCommand(CheckLicense);
+        public ICommand ActiveLicenseCmd => new RelayCommand(ActiveLicense);
         public ICommand LoadLicenseCmd => new RelayCommand(LoadLicense);
         public ICommand DeleteLicenseCmd => new RelayCommand(DeleteLicense);
         
         public Visibility LicenseIsValid { get; set; } = Visibility.Hidden;
-        public string Test { get; set; } = "Test";
+        
         public string LicenseKeyInput { get; set; }
         public string LicenseKeyStatus { get; set; }
         public string F1Feature { get; set; }
@@ -45,12 +45,13 @@ namespace SuCri.Modul2.Core.License.ViewModel
         {
             LicenseKeyInput = "";
             LicenseKeyStatus = "";
-            WTLicenseKey.Instance.DeleteLicense();
+            WTLicenseKey.Instance.DeactiveKey();
+            LoadLicense();
             LicenseIsValid = Visibility.Hidden;
         }
         void LoadLicense() 
         {
-            if(WTLicenseKey.Instance.IsValidKey) 
+            if (WTLicenseKey.Instance.LicenseKey != null) 
             {
                 LicenseKeyInput = WTLicenseKey.Instance.LicenseKey.Key;
                 LicenseKey licenseKey = WTLicenseKey.Instance.LicenseKey;
@@ -79,7 +80,7 @@ namespace SuCri.Modul2.Core.License.ViewModel
                     F8Feature = "None";
                 }
                 LicenseIsValid = Visibility.Visible;
-                if (WTLicenseKey.Instance.HaveCustomerInfomation)
+                if (licenseKey.Customer != null)
                 {
                     CompanyName = licenseKey.Customer.CompanyName;
                     Email = licenseKey.Customer.Email;
@@ -104,11 +105,11 @@ namespace SuCri.Modul2.Core.License.ViewModel
                 }
             }
         }
-        void CheckLicense()
+        void ActiveLicense()
         {
             if (LicenseKeyInput != null) 
             {
-                WTLicenseKey.Instance.CheckLicenseKey(LicenseKeyInput);
+                WTLicenseKey.Instance.ActiveLicenseKey(LicenseKeyInput);
                 LoadLicense();
             }
         }

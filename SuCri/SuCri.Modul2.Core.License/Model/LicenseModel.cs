@@ -13,6 +13,7 @@ namespace SuCri.Modul2.Core.License.Model
         public DateTime ExpirationDate { get; set; }
         public string Machines { get; set; }
         public string Status { get; set; }
+        public string ProductName { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
