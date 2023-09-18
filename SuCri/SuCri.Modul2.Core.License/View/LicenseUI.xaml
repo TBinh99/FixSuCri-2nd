@@ -67,7 +67,7 @@
         <TextBlock
             Grid.Row="2"
             HorizontalAlignment="Center"
-            Text="{Binding LicenseKeyStatus}" />
+            Text="{Binding LicenseKeyStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Grid
             Grid.Row="3"
             Margin="100,20,20,30"

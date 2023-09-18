@@ -18,13 +18,26 @@ namespace SuCri.Modul2.Core.License.ViewModel
 {
     public class LicenseVM : INotifyPropertyChanged
     {
-        public LicenseVM() { }
+        public LicenseVM() 
+        {
+            WTLicenseKey.Instance.PropertyChanged += (sender, e) => { CurrentLicenseKey = new LicenseKey(); };
+        }
         public ICommand ActiveLicenseCmd => new RelayCommand(ActiveLicense);
         public ICommand LoadLicenseCmd => new RelayCommand(LoadLicense);
         public ICommand DeleteLicenseCmd => new RelayCommand(DeleteLicense);
         
         public Visibility LicenseIsValid { get; set; } = Visibility.Hidden;
-        
+
+        public LicenseKey CurrentLicenseKey
+        {
+            get { return WTLicenseKey.Instance.LicenseKey; }
+            set { }
+        }
+        void OnCurrentLicenseKeyChanged() 
+        {
+            LoadLicense();
+        }
+        public string Test { get; set; }
         public string LicenseKeyInput { get; set; }
         public string LicenseKeyStatus { get; set; }
         public string F1Feature { get; set; }
@@ -46,7 +59,6 @@ namespace SuCri.Modul2.Core.License.ViewModel
             LicenseKeyInput = "";
             LicenseKeyStatus = "";
             WTLicenseKey.Instance.DeactiveKey();
-            LoadLicense();
             LicenseIsValid = Visibility.Hidden;
         }
         void LoadLicense() 
@@ -96,13 +108,11 @@ namespace SuCri.Modul2.Core.License.ViewModel
                 CreatedDate = licenseKey.Created;
                 ExpiresDate = licenseKey.Expires;
             }
-            else 
+            else
             {
                 LicenseIsValid = Visibility.Hidden;
-                if (!string.IsNullOrEmpty(LicenseKeyInput))
-                { 
-                    LicenseKeyStatus = "Your license key does not exist"; 
-                }
+                LicenseKeyInput = "";
+                LicenseKeyStatus = "";
             }
         }
         void ActiveLicense()
@@ -110,7 +120,14 @@ namespace SuCri.Modul2.Core.License.ViewModel
             if (LicenseKeyInput != null) 
             {
                 WTLicenseKey.Instance.ActiveLicenseKey(LicenseKeyInput);
-                LoadLicense();
+                if (WTLicenseKey.Instance.LicenseKey == null)
+                {
+                    LicenseIsValid = Visibility.Hidden;
+                    if (!string.IsNullOrEmpty(LicenseKeyInput))
+                    {
+                        LicenseKeyStatus = "Your license key does not exist";
+                    }
+                }
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

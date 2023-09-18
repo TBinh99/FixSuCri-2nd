@@ -21,7 +21,19 @@ namespace SuCri.Modul2.Core.License.ViewModel
 {
     public class CompanyLicensesVM : INotifyPropertyChanged
     {
-        public CompanyLicensesVM() { }
+        public CompanyLicensesVM() 
+        {
+            WTLicenseKey.Instance.PropertyChanged += (sender, e) => { CurrentCustomer = new GetCustomerLicensesResult(); };
+        }
+        public GetCustomerLicensesResult CurrentCustomer
+        {
+            get { return WTLicenseKey.Instance.CustomerInfo; }
+            set { }
+        }
+        void OnCurrentCustomerChanged()
+        {
+            LoadCompanyLicenses();
+        }
         private string tokenWithAllPermission = "WyI1OTMwMzI2NiIsInVpSXM4SG1rU3RYd09IQmh2MmRDRWRDTlNpYWVOcUdFRXJxak5uenEiXQ==";
         public string CompanyName { get; set; }
         public string Email { get; set; }
@@ -41,8 +53,6 @@ namespace SuCri.Modul2.Core.License.ViewModel
             if(!string.IsNullOrEmpty(CustomerSecertInput))
             {
                 WTLicenseKey.Instance.GetCompanyLicenses(CustomerSecertInput);
-
-                LoadCompanyLicenses();
             }
         }
         void LoadCompanyLicenses()
@@ -84,7 +94,6 @@ namespace SuCri.Modul2.Core.License.ViewModel
         void DeleteCustomer() 
         {
             WTLicenseKey.Instance.DeleteCompanyLicenses();
-            LoadCompanyLicenses();
         }
 
         void ActiveKey(string licenseKey) 

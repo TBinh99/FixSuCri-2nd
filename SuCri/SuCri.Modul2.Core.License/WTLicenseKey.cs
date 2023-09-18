@@ -86,22 +86,25 @@ namespace SuCri.Modul2.Core.License
                 }
                 Properties.Settings.Default.LicenseKey = LicenseKey.Key;
                 Properties.Settings.Default.Save();
-                ReloadCompanyLicense();
+                //ReloadCompanyLicense();
             }
         }
         public void DeactiveKey()
         {
-            // Deactive not work, dont know why yet
-            var deactive = Key.Deactivate(token: tokenWithAllPermission, parameters: new DeactivateModel()
+            if(LicenseKey != null)
             {
-                Key = LicenseKey.Key,
-                ProductId = LicenseKey.ProductId,
-                MachineCode = Helpers.GetMachineCodePI(v: 2),
-            });
-            ReloadCompanyLicense();
+                // Deactive not work, dont know why yet
+                var deactive = Key.Deactivate(token: tokenWithAllPermission, parameters: new DeactivateModel()
+                {
+                    Key = LicenseKey.Key,
+                    ProductId = LicenseKey.ProductId,
+                    MachineCode = Helpers.GetMachineCodePI(v: 2),
+                });
+            }
             LicenseKey = null;
             Properties.Settings.Default.LicenseKey = null;
             Properties.Settings.Default.Save();
+            //ReloadCompanyLicense();
         }
 
         private void GetProductsInfomation() 
