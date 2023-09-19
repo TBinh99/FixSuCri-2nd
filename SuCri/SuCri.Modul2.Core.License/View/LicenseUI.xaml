@@ -15,6 +15,9 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadLicenseCmd}" />
         </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding CloseLicenseCmd}" />
+        </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.DataContext>
         <viewmodel:LicenseVM />
@@ -44,9 +47,9 @@
                     <TextBlock Text="Name: " />
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <TextBlock Margin="10,0,0,0" Text="{Binding CompanyName}" />
-                    <TextBlock Margin="10,0,0,0" Text="{Binding Email}" />
-                    <TextBlock Margin="10,0,0,0" Text="{Binding Name}" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding LicenseCompanyName}" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding LicenseEmail}" />
+                    <TextBlock Margin="10,0,0,0" Text="{Binding LicenseName}" />
                 </StackPanel>
             </Grid>
         </StackPanel>

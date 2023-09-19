@@ -160,6 +160,8 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
             else
             {
                 System.Windows.Forms.MessageBox.Show($"Feature is not active");
+                //Document doc = Application.DocumentManager.MdiActiveDocument;
+                //doc.Editor.WriteMessage("Feature is not active");
                 return false;
             }
         }

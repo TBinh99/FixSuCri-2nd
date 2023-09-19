@@ -231,18 +231,19 @@ namespace SuCri.Modul2.Addin
             editor.WriteMessage("Line created successfully.\n");
         }
 
+        public static LicenseVM LicenseVM { get; set; } = new LicenseVM { };
         [CommandMethod("LicenseForm")]
         public void LicenseForm()
         {
             PaletteSingleton.Hide();
-            LicenseUI ui = new LicenseUI();
+            LicenseUI ui = new LicenseUI() { DataContext = LicenseVM };
             ui.Show();
         }
         [CommandMethod("CompanyLicensesForm")]
         public void CompanyLicensesForm()
         {
             PaletteSingleton.Hide();
-            CompanyLicensesUI ui = new CompanyLicensesUI();
+            CompanyLicensesUI ui = new CompanyLicensesUI() { DataContext = LicenseVM };
             ui.Show();
         }
         //private void RegisterHaleyThemes()

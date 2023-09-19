@@ -17,8 +17,6 @@ namespace SuCri.Modul2.Core.License
         public WTLicenseKey()
         {
             GetProductsInfomation();
-            var test = Properties.Settings.Default.CustomerSecret;
-            var test1 = Properties.Settings.Default.LicenseKey;
             if (!string.IsNullOrEmpty(Properties.Settings.Default.CustomerSecret))
             {
                 GetCompanyLicenses(Properties.Settings.Default.CustomerSecret);
@@ -45,6 +43,8 @@ namespace SuCri.Modul2.Core.License
         public GetProductsResult ProductsInfo { get; set; }
         public GetCustomerLicensesResult CustomerInfo { get; set; }
 
+        public string CustomerSecret = "";
+
         public string LicenseKeyMessage = "";
         public string CompanyLicensesMessage = "";
 
@@ -53,7 +53,10 @@ namespace SuCri.Modul2.Core.License
 
         private string tokenWithAllPermission = "WyI1OTMwMzI2NiIsInVpSXM4SG1rU3RYd09IQmh2MmRDRWRDTlNpYWVOcUdFRXJxak5uenEiXQ==";
 
-        public string CustomerSecret { get; set; }
+        private void GetProductsInfomation()
+        {
+            ProductsInfo = ProductMethods.GetProducts(tokenWithAllPermission, new RequestModel());
+        }
 
         public void ActiveLicenseKey(string keyInput, int productId)
         {
@@ -71,8 +74,7 @@ namespace SuCri.Modul2.Core.License
             LicenseKeyMessage = result.Message;
             if (result == null || result.Result == ResultType.Error || !result.LicenseKey.HasValidSignature(RSAPubKey).IsValid())
             {
-                //Properties.Settings.Default.Reset();
-                //Properties.Settings.Default.Save();
+                OnPropertyChanged("LicenseKey");
             }
             else
             {
@@ -117,10 +119,7 @@ namespace SuCri.Modul2.Core.License
             LicenseKey = null;
         }
 
-        private void GetProductsInfomation() 
-        {
-            ProductsInfo = ProductMethods.GetProducts(tokenWithAllPermission, new RequestModel());
-        }
+
         public void GetCompanyLicenses(string customerSecret)
         {
             GetCustomerLicensesBySecretModel customerInfo = new GetCustomerLicensesBySecretModel();
@@ -131,9 +130,14 @@ namespace SuCri.Modul2.Core.License
             CompanyLicensesMessage = customerLicenses.Message;
             if (customerLicenses.Result == ResultType.Success)
             {
+                CustomerSecret = customerSecret;
                 CustomerInfo = customerLicenses;
                 Properties.Settings.Default.CustomerSecret = customerSecret;
                 Properties.Settings.Default.Save();
+            }
+            else 
+            {
+                OnPropertyChanged("CustomerInfo");
             }
         }
         public void DeleteCompanyLicenses()
@@ -158,6 +162,10 @@ namespace SuCri.Modul2.Core.License
             Properties.Settings.Default.Save();
         }
 
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
