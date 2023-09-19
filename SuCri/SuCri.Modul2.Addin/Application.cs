@@ -20,7 +20,8 @@ namespace SuCri.Modul2.Addin
             LoadRefFiles();
            
             new Ribbon().MyRibbon();
-            new WTLicenseKey();
+
+            var licenseKey = WTLicenseKey.Instance;
             //OverruleStartUp overruleStartUp = new OverruleStartUp();
             //overruleStartUp.LockLayerCommand();
         }
@@ -46,6 +47,6 @@ namespace SuCri.Modul2.Addin
                 MessageBox.Show(e.ToString());
             }
         }
-        
+
     }
 }

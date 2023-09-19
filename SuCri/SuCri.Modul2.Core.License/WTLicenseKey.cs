@@ -26,7 +26,7 @@ namespace SuCri.Modul2.Core.License
                 ActiveLicenseKey(Properties.Settings.Default.LicenseKey, Properties.Settings.Default.ProductId);
             }
         }
-        public static WTLicenseKey _instance { get; set; }
+        private static WTLicenseKey _instance;
         public static WTLicenseKey Instance
         {
             get
@@ -168,4 +168,5 @@ namespace SuCri.Modul2.Core.License
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }
+
 }
