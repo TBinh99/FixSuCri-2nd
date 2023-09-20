@@ -123,7 +123,7 @@ namespace SuCri.Modul2.Addin
 
                 var pan1Button6 = new RibbonButton
                 {
-                    Text = "CompanyLicensesInfo",
+                    Text = "CustomerLicensesInfo",
                     ShowText = true,
                     ShowImage = true,
                     Image = Images.GetBitmap(Properties.Resources.CompanyLicenses),
@@ -131,7 +131,7 @@ namespace SuCri.Modul2.Addin
                     Orientation = System.Windows.Controls.Orientation.Vertical,
                     Size = RibbonItemSize.Large,
                     CommandHandler = new RibbonCommandHandler(),
-                    CommandParameter = "CompanyLicenses",
+                    CommandParameter = "CustomerLicenses",
                 };
 
                 //var panel2Panel = new RibbonPanelSource

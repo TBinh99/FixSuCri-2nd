@@ -239,8 +239,8 @@ namespace SuCri.Modul2.Addin
             LicenseUI ui = new LicenseUI() { DataContext = LicenseVM };
             ui.Show();
         }
-        [CommandMethod("CompanyLicensesForm")]
-        public void CompanyLicensesForm()
+        [CommandMethod("CustomerLicensesForm")]
+        public void CustomerLicensesForm()
         {
             PaletteSingleton.Hide();
             CompanyLicensesUI ui = new CompanyLicensesUI() { DataContext = LicenseVM };
