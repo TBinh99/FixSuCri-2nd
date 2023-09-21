@@ -121,19 +121,6 @@ namespace SuCri.Modul2.Addin
                     CommandParameter = "LicenseForm",
                 };
 
-                var pan1Button6 = new RibbonButton
-                {
-                    Text = "CustomerLicensesInfo",
-                    ShowText = true,
-                    ShowImage = true,
-                    Image = Images.GetBitmap(Properties.Resources.CompanyLicenses),
-                    LargeImage = Images.GetBitmap(Properties.Resources.CompanyLicenses),
-                    Orientation = System.Windows.Controls.Orientation.Vertical,
-                    Size = RibbonItemSize.Large,
-                    CommandHandler = new RibbonCommandHandler(),
-                    CommandParameter = "CustomerLicenses",
-                };
-
                 //var panel2Panel = new RibbonPanelSource
                 //{
                 //    Title = "Modul4"
@@ -197,7 +184,6 @@ namespace SuCri.Modul2.Addin
                 //panel1Panel.Items.Add(pan1Button3);
                 panel1Panel.Items.Add(pan1Button4);
                 panel1Panel.Items.Add(pan1Button5);
-                panel1Panel.Items.Add(pan1Button6);
                 //panel3Panel.Items.Add(pan3Button1);
                 //panel1Panel.Items.Add(new RibbonSeparator());
                 //panel1Panel.Items.Add(pan1Row1);

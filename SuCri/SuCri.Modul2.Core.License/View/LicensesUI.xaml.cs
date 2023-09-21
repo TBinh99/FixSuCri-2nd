@@ -18,9 +18,9 @@ namespace SuCri.Modul2.Core.License.View
     /// <summary>
     /// Interaction logic for CompanyLicensesUI.xaml
     /// </summary>
-    public partial class CompanyLicensesUI : Window
+    public partial class LicenseUI : Window
     {
-        public CompanyLicensesUI()
+        public LicenseUI()
         {
             InitializeComponent();
         }

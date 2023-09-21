@@ -25,114 +25,6 @@ namespace SuCri.Modul2.Core.License.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool F1FeatureActive {
-            get {
-                return ((bool)(this["F1FeatureActive"]));
-            }
-            set {
-                this["F1FeatureActive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool F2FeatureActive {
-            get {
-                return ((bool)(this["F2FeatureActive"]));
-            }
-            set {
-                this["F2FeatureActive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool F3FeatureActive {
-            get {
-                return ((bool)(this["F3FeatureActive"]));
-            }
-            set {
-                this["F3FeatureActive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool F4FeatureActive {
-            get {
-                return ((bool)(this["F4FeatureActive"]));
-            }
-            set {
-                this["F4FeatureActive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool F5FeatureActive {
-            get {
-                return ((bool)(this["F5FeatureActive"]));
-            }
-            set {
-                this["F5FeatureActive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool F6FeatureActive {
-            get {
-                return ((bool)(this["F6FeatureActive"]));
-            }
-            set {
-                this["F6FeatureActive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool F7FeatureActive {
-            get {
-                return ((bool)(this["F7FeatureActive"]));
-            }
-            set {
-                this["F7FeatureActive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool F8FeatureActive {
-            get {
-                return ((bool)(this["F8FeatureActive"]));
-            }
-            set {
-                this["F8FeatureActive"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LicenseKey {
-            get {
-                return ((string)(this["LicenseKey"]));
-            }
-            set {
-                this["LicenseKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string CustomerSecret {
             get {
@@ -152,6 +44,18 @@ namespace SuCri.Modul2.Core.License.Properties {
             }
             set {
                 this["ProductId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AllProductLicenseKey {
+            get {
+                return ((string)(this["AllProductLicenseKey"]));
+            }
+            set {
+                this["AllProductLicenseKey"] = value;
             }
         }
     }

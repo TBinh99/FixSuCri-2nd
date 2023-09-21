@@ -21,7 +21,7 @@ namespace SuCri.Modul2.Addin
            
             new Ribbon().MyRibbon();
 
-            var licenseKey = WTLicenseKey.Instance;
+            var alllicenseKey = WTLicenseKey.Instance;
             //OverruleStartUp overruleStartUp = new OverruleStartUp();
             //overruleStartUp.LockLayerCommand();
         }
