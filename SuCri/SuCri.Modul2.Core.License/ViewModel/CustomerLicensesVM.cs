@@ -35,60 +35,55 @@ namespace SuCri.Modul2.Core.License.ViewModel
                     item.NewLicenseKeyInput = item.LicenseKey.Key;
                 }
             }
+            CustomerChanged();
+        }
+        public void CustomerChanged() 
+        {
+            if (WTLicenseKey.Instance.CustomerLicensesStatus == ResultType.Success)
+            {
+                CompanyName = WTLicenseKey.Instance.CompanyName;
+                Email = WTLicenseKey.Instance.Email;
+                Name = WTLicenseKey.Instance.CustomerName;
+                CustomerSecertInput = WTLicenseKey.Instance.CustomerSecret;
+                CustomerLicenseMessage = null; // or successful etc...
+                CustomerLicense = WTLicenseKey.Instance.CustomerLicense;
+            }
+            else
+            {
+                //When you trying to put new Customer Secret but not valid and you already have one Customer Secret saved, you will reset info to current customer.
+                if (WTLicenseKey.Instance.CustomerInfo != null)
+                {
+                    WTLicenseKey.Instance.CustomerLicensesStatus = ResultType.Success;
+                    CustomerLicenseMessage = WTLicenseKey.Instance.CustomerLicensesMessage;
+                }
+                //In case you dont have any Customer Secret you will get message and return no infomation
+                else if (!string.IsNullOrEmpty(CustomerSecertInput))
+                {
+                    CustomerLicenseMessage = WTLicenseKey.Instance.CustomerLicensesMessage;
+                }
+                else 
+                {
+                    CustomerLicenseMessage = null;
+                }
+                Name = null;
+                CompanyName = null;
+                Email = null;
+                CustomerLicense = null;
+            }
         }
         public string CompanyName { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string CustomerSecertInput { get; set; }
         public string CustomerLicenseMessage { get; set; }
-        public ObservableCollection<CustomerLicenseInfo> CustomerLicense { get; set; }
+        public ObservableCollection<WTCustomerLicensesHelper> CustomerLicense { get; set; }
 
-        public ICommand LoadCustomerLicensesCmd => new RelayCommand(LoadCustomerLicenses);
         public ICommand CloseCustomerLicensesCmd => new RelayCommand(CloseCustomerLicenses);
         public ICommand GetCustomerLicensesCmd => new RelayCommand(GetCustomerLicenses);
         public ICommand DeleteCustomerCmd => new RelayCommand(DeleteCustomer);
-        public ICommand ActiveKeyCmd => new RelayCommand<CustomerLicenseInfo>(ActiveKey);
-        public ICommand DeactiveKeyCmd => new RelayCommand<CustomerLicenseInfo>(DeactiveKey);
-        void LoadCustomerLicenses()
-        {
-            if (WTLicenseKey.Instance.CustomerLicensesStatus == ResultType.Success)
-            {
-                var firstKey = WTLicenseKey.Instance.CustomerInfo.LicenseKeys.FirstOrDefault();
-                if (firstKey != null)
-                {
-                    Name = firstKey.Customer.Name;
-                    CompanyName = firstKey.Customer.CompanyName;
-                    Email = firstKey.Customer.Email;
-                }
-                else
-                {
-                    // If dont have key, we cant get infomation of customer
-                    Name = "";
-                    CompanyName = "";
-                    Email = "";
-                }
-                CustomerLicense = new ObservableCollection<CustomerLicenseInfo>();
-                foreach (var licenseInfo in WTLicenseKey.Instance.CustomerInfo.LicenseKeys)
-                {
-                    CustomerLicense.Add(new CustomerLicenseInfo(licenseInfo));
-                }
-                CustomerSecertInput = WTLicenseKey.Instance.CustomerSecret;
-                CustomerLicenseMessage = WTLicenseKey.Instance.CustomerLicensesMessage;
-            }
-            else
-            {
-                if (WTLicenseKey.Instance.CustomerInfo != null && string.IsNullOrEmpty(CustomerSecertInput))
-                {
-                    CustomerLicenseMessage = "";
-                    CustomerSecertInput = WTLicenseKey.Instance.CustomerSecret;
-                }
-                else
-                {
-                    CustomerLicenseMessage = WTLicenseKey.Instance.CustomerLicensesMessage;
-                    //CustomerLicenseMessage = "Your customer secret is not valid";
-                }
-            }
-        }
+        public ICommand ActiveKeyCmd => new RelayCommand<WTCustomerLicensesHelper>(ActiveKey);
+        public ICommand DeactiveKeyCmd => new RelayCommand<WTCustomerLicensesHelper>(DeactiveKey);
+        public ICommand RefreshCustomerInfoCmd => new RelayCommand(CustomerChanged);
         void CloseCustomerLicenses() 
         {
             CustomerSecertInput = "";
@@ -102,28 +97,26 @@ namespace SuCri.Modul2.Core.License.ViewModel
             Settings.Default.AllProductLicenseKey = json;
             Settings.Default.Save();
         }
-        void GetCustomerLicenses() 
+        void GetCustomerLicenses()
         {
             if(!string.IsNullOrEmpty(CustomerSecertInput))
             {
                 WTLicenseKey.Instance.GetCustomerLicenses(CustomerSecertInput);
+                CustomerChanged();
             }
         }
         void DeleteCustomer() 
         {
-            Name = "";
-            CompanyName = "";
-            Email = "";
-            CustomerLicense = new ObservableCollection<CustomerLicenseInfo>();
-            CustomerSecertInput = "";
             WTLicenseKey.Instance.DeleteCustomerLicenses();
+            CustomerSecertInput = null;
+            CustomerChanged();
         }
-        void ActiveKey(CustomerLicenseInfo license) 
+        void ActiveKey(WTCustomerLicensesHelper license) 
         {
             WTLicenseKey.Instance.AllProductLicenseKey[(Product)license.ProductId].ActiveLicenseKey(license.ValidLicenseKeys);
             license.IsKeyOnMachine();
         }
-        void DeactiveKey(CustomerLicenseInfo license)
+        void DeactiveKey(WTCustomerLicensesHelper license)
         {
             WTLicenseKey.Instance.AllProductLicenseKey[(Product)license.ProductId].DeactiveLicenseKey();
             license.IsKeyOnMachine();

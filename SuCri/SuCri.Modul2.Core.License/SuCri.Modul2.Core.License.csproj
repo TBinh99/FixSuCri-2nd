@@ -57,13 +57,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Model\LicenseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CustomerLicensesVM.cs" />
     <Compile Include="ViewModel\LicenseVM.cs" />
     <Compile Include="View\LicensesUI.xaml.cs">
       <DependentUpon>LicensesUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WTCustomerLicensesHelper.cs" />
     <Compile Include="WTKeyHelpers.cs" />
     <Compile Include="WTKeyLicense.cs" />
   </ItemGroup>

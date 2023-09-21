@@ -18,14 +18,16 @@
         <viewmodel:LicenseVM />
     </Window.DataContext>
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadCustomerLicensesCmd}" />
-        </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding CloseCustomerLicensesCmd}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <TabControl>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="SelectionChanged">
+                <i:InvokeCommandAction Command="{Binding RefreshCustomerInfoCmd}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <TabItem Header="Customer Licenses">
             <Grid>
                 <Grid.RowDefinitions>
@@ -50,7 +52,7 @@
                             Command="{Binding GetCustomerLicensesCmd}"
                             Content="Get Customer Licenses" />
                     </StackPanel>
-                    <TextBlock HorizontalAlignment="Center" Text="{Binding CompanyLicenseMessage}" />
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding CustomerLicenseMessage}" />
                 </StackPanel>
                 <StackPanel
                     Grid.Row="1"
@@ -70,7 +72,7 @@
                         <StackPanel Grid.Column="1">
                             <TextBlock Margin="10,0,0,0" Text="{Binding CompanyName}" />
                             <TextBlock Margin="10,0,0,0" Text="{Binding Email}" />
-                            <TextBlock Margin="10,0,0,0" Text="{Binding Name}" />
+                            <TextBlock Margin="10,0,0,0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>

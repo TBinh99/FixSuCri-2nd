@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static SuCri.Modul2.Core.License.WTKeyHelpers;
+using System.Collections.ObjectModel;
+using System.Xml.Linq;
 
 namespace SuCri.Modul2.Core.License
 {
@@ -42,6 +44,16 @@ namespace SuCri.Modul2.Core.License
             {
                 GetCustomerLicenses(Settings.Default.CustomerSecret);
             }
+
+            //List<string> namePropertyCustomerLicenses = new List<string>() { "CustomerName", "CompanyName", "Email", "CustomerLicensesMessage", "CustomerSecret", "CustomerLicense" };
+            //CustomerLicenses = new ObservableDictionary<string, object>();
+            //foreach (string nameProperty in namePropertyCustomerLicenses)
+            //{
+            //    CustomerLicenses.Add(nameProperty, "");
+            //    if (nameProperty == "CustomerLicense")
+            //    { }
+            //}
+
         }
 
         private static WTLicenseKey _instance;
@@ -59,13 +71,20 @@ namespace SuCri.Modul2.Core.License
 
         public GetProductsResult ProductsInfo { get; set; }
         public GetCustomerLicensesResult CustomerInfo { get; set; }
-        public ObservableDictionary<Product, WTKeyHelpers> AllProductLicenseKey { get; set; }
 
-        private string tokenWithAllPermission = "WyI2MTU1MzA4NiIsIkxucmJRS1JnV1EwUk94MFdNbVkvN0NzeWpabjN1T2t6UFp0YTJoY1MiXQ==";
-        public string CustomerLicensesMessage = "";
-        public string CustomerSecret = "";
+        //public ObservableDictionary<string, object> CustomerLicenses { get; set; }
+        public string CustomerName { get; set; }
+        public string CompanyName { get; set; }
+        public string Email { get; set; }
+        public string CustomerLicensesMessage { get; set; }
+        public string CustomerSecret { get; set; }
 
         public ResultType CustomerLicensesStatus = ResultType.Error;
+        public ObservableCollection<WTCustomerLicensesHelper> CustomerLicense { get; set; }
+        public ObservableDictionary<Product, WTKeyHelpers> AllProductLicenseKey { get; set; }
+
+
+        private string tokenWithAllPermission = "WyI2MTU1MzA4NiIsIkxucmJRS1JnV1EwUk94MFdNbVkvN0NzeWpabjN1T2t6UFp0YTJoY1MiXQ==";
 
         private void GetProductsInfomation()
         {
@@ -83,8 +102,20 @@ namespace SuCri.Modul2.Core.License
             {
                 CustomerSecret = customerSecret;
                 CustomerInfo = customerLicenses;
+
                 Settings.Default.CustomerSecret = customerSecret;
                 Settings.Default.Save();
+
+                var firstKey = customerLicenses.LicenseKeys.FirstOrDefault();
+                CustomerName = firstKey?.Customer.Name;
+                CompanyName = firstKey?.Customer.CompanyName;
+                Email = firstKey?.Customer.Email;
+                ObservableCollection<WTCustomerLicensesHelper> licenses = new ObservableCollection<WTCustomerLicensesHelper>();
+                foreach (var licenseInfo in customerLicenses.LicenseKeys)
+                {
+                    licenses.Add(new WTCustomerLicensesHelper(licenseInfo, ProductsInfo.Products, AllProductLicenseKey));
+                }
+                CustomerLicense = licenses;
             }
             else
             {
@@ -93,15 +124,25 @@ namespace SuCri.Modul2.Core.License
         public void DeleteCustomerLicenses()
         {
             CustomerLicensesStatus = ResultType.Error;
-            Properties.Settings.Default.CustomerSecret = null;
-            Properties.Settings.Default.Save();
+            Settings.Default.CustomerSecret = null;
+            Settings.Default.Save();
             CustomerInfo = null;
+
+            CustomerName = "";
+            CompanyName = "";
+            Email = "";
+            CustomerLicensesMessage = "";
             CustomerSecret = null;
+            CustomerLicense.Clear();
         }
 
         public bool CheckLicense(Product product, Feature feature)
         {
             return AllProductLicenseKey[product].FeatureActive[feature];
+        }
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
