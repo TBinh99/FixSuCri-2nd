@@ -28,15 +28,6 @@ namespace SuCri.Modul2.Core.License.ViewModel
         public LicenseVM()
         {
             LicenseKeySource = WTLicenseKey.Instance.AllProductLicenseKey;
-            WTLicenseKey.Instance.PropertyChanged += (sender, e) =>
-                {
-                    if(e.PropertyName == "LicenseKey" || e.PropertyName == "CustomerInfo")
-                    {
-                        LoadCustomerLicenses();
-                        //OnPropertyChanged("ValidLicenseKeys");
-                        //OnPropertyChanged("CustomerLicense");
-                    }
-                };
             foreach (WTKeyHelpers item in WTLicenseKey.Instance.AllProductLicenseKey.Values)
             {
                 if(item.LicenseKey != null)
@@ -57,7 +48,7 @@ namespace SuCri.Modul2.Core.License.ViewModel
         public ICommand GetCustomerLicensesCmd => new RelayCommand(GetCustomerLicenses);
         public ICommand DeleteCustomerCmd => new RelayCommand(DeleteCustomer);
         public ICommand ActiveKeyCmd => new RelayCommand<CustomerLicenseInfo>(ActiveKey);
-        public ICommand DeactiveKeyCmd => new RelayCommand<string>(DeactiveKey);
+        public ICommand DeactiveKeyCmd => new RelayCommand<CustomerLicenseInfo>(DeactiveKey);
         void LoadCustomerLicenses()
         {
             if (WTLicenseKey.Instance.CustomerLicensesStatus == ResultType.Success)
@@ -79,14 +70,7 @@ namespace SuCri.Modul2.Core.License.ViewModel
                 CustomerLicense = new ObservableCollection<CustomerLicenseInfo>();
                 foreach (var licenseInfo in WTLicenseKey.Instance.CustomerInfo.LicenseKeys)
                 {
-                    CustomerLicense.Add(new CustomerLicenseInfo()
-                    {
-                        ValidLicenseKeys = licenseInfo.Key,
-                        ProductName = WTLicenseKey.Instance.ProductsInfo.Products.First(x => x.Id == licenseInfo.ProductId).Name,
-                        ExpirationDate = licenseInfo.Expires,
-                        Machines = $"{licenseInfo.ActivatedMachines.Count()}/{licenseInfo.MaxNoOfMachines}",
-                        Status = $"{(licenseInfo.Period == 0 ? "Red" : (licenseInfo.Period < 14) ? "Orange" : "Green")}"
-                    });
+                    CustomerLicense.Add(new CustomerLicenseInfo(licenseInfo));
                 }
                 CustomerSecertInput = WTLicenseKey.Instance.CustomerSecret;
                 CustomerLicenseMessage = WTLicenseKey.Instance.CustomerLicensesMessage;
@@ -136,42 +120,18 @@ namespace SuCri.Modul2.Core.License.ViewModel
         }
         void ActiveKey(CustomerLicenseInfo license) 
         {
-            int productId = WTLicenseKey.Instance.ProductsInfo.Products.First(x => x.Name == license.ProductName).Id;
-            //AllLicenseKey.Instance.AllProductLicenseKey[(Product)productId].NewLicenseKeyInput = license.ValidLicenseKeys;
-            WTLicenseKey.Instance.AllProductLicenseKey[(Product)productId].ActiveLicenseKey(license.ValidLicenseKeys, productId);
+            WTLicenseKey.Instance.AllProductLicenseKey[(Product)license.ProductId].ActiveLicenseKey(license.ValidLicenseKeys);
+            license.IsKeyOnMachine();
         }
-        void DeactiveKey(string productName)
+        void DeactiveKey(CustomerLicenseInfo license)
         {
-            //LicenseKeyMessage = "";
-            //AllLicenseKey.Instance.AllProductLicenseKey[(Product)productId].NewLicenseKeyInput = license.ValidLicenseKeys;
-            int productId = WTLicenseKey.Instance.ProductsInfo.Products.First(x => x.Name == productName).Id;
-            WTLicenseKey.Instance.AllProductLicenseKey[(Product)productId].DeactiveLicenseKey();
-        }
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-    }
-    public class TypeToVisibilityConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            foreach (WTKeyHelpers a in WTLicenseKey.Instance.AllProductLicenseKey.Values)
-            {
-                if (a.LicenseKey !=null && a.LicenseKey.Key == value.ToString())
-                {
-                    return Visibility.Visible;
-                }
-            }
-            return Visibility.Hidden;
+            WTLicenseKey.Instance.AllProductLicenseKey[(Product)license.ProductId].DeactiveLicenseKey();
+            license.IsKeyOnMachine();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
+
     public class StatusToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

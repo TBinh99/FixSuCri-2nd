@@ -33,16 +33,23 @@ namespace SuCri.Modul2.Core.License.ViewModel
         }
         void DeleteLicense(WTKeyHelpers item)
         {
+            var itemCustomerLicense = CustomerLicense.FirstOrDefault(x => x.ValidLicenseKeys == item.NewLicenseKeyInput);
             item.DeactiveLicenseKey();
-            item.NewLicenseKeyInput = "";
-            item.NewLicenseKeyMessage = "";
+            if (itemCustomerLicense != null)
+            {
+                itemCustomerLicense.IsKeyOnMachine();
+            }
         }
         void ActiveLicense(WTKeyHelpers item)
         {
             if (!string.IsNullOrEmpty(item.NewLicenseKeyInput))
             {
-                Product foundKey = WTLicenseKey.Instance.AllProductLicenseKey.FirstOrDefault(x => x.Value.Equals(item)).Key;
-                item.ActiveLicenseKey(item.NewLicenseKeyInput,((int)foundKey));
+                item.ActiveLicenseKey(item.NewLicenseKeyInput);
+                var itemCustomerLicense = CustomerLicense.FirstOrDefault(x => x.ValidLicenseKeys == item.NewLicenseKeyInput);
+                if (itemCustomerLicense != null)
+                {
+                    itemCustomerLicense.IsKeyOnMachine();
+                }
             }
         }
     }

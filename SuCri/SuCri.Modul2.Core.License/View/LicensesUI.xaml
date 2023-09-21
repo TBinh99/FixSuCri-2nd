@@ -12,7 +12,6 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Window.Resources>
-        <viewmodel:TypeToVisibilityConverter x:Key="TypeToVisibilityConverter" />
         <viewmodel:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter" />
     </Window.Resources>
     <Window.DataContext>
@@ -83,7 +82,7 @@
                     BorderThickness="0"
                     CanUserAddRows="False"
                     ColumnWidth="*"
-                    ItemsSource="{Binding CustomerLicense}">
+                    ItemsSource="{Binding CustomerLicense, UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>
                         <!--  Other columns here  -->
                         <DataGridTemplateColumn Width="2*" Header="Valid License Keys">
@@ -130,9 +129,9 @@
                                             VerticalContentAlignment="Center"
                                             BorderThickness="0"
                                             Command="{Binding DataContext.DeactiveKeyCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding ProductName}"
+                                            CommandParameter="{Binding}"
                                             Content="Deactive Key"
-                                            Visibility="{Binding ValidLicenseKeys, Converter={StaticResource TypeToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                                            Visibility="{Binding EnableDeactive}" />
                                     </Grid>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

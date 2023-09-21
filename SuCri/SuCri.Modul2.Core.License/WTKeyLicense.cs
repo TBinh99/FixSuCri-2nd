@@ -22,14 +22,7 @@ namespace SuCri.Modul2.Core.License
             AllProductLicenseKey = new ObservableDictionary<Product, WTKeyHelpers>();
             foreach (Product product in Enum.GetValues(typeof(Product)))
             {
-                WTKeyHelpers keyHelpers = new WTKeyHelpers();
-                keyHelpers.PropertyChanged += (s, e) =>
-                {
-                    if (e.PropertyName == "LicenseKey")
-                    {
-                        OnPropertyChanged("LicenseKey");
-                    }
-                };
+                WTKeyHelpers keyHelpers = new WTKeyHelpers((int)product);
                 AllProductLicenseKey[product] = keyHelpers;
             }
             if (!string.IsNullOrEmpty(Settings.Default.AllProductLicenseKey))
@@ -41,15 +34,7 @@ namespace SuCri.Modul2.Core.License
                     {
                         LicenseKey checkKey = item.Value.LicenseKey;
                         if (checkKey is null) { continue; }
-                        WTKeyHelpers keyHelpers = new WTKeyHelpers(checkKey.Key, checkKey.ProductId);
-                        keyHelpers.PropertyChanged += (s, e) =>
-                        {
-                            if (e.PropertyName == "LicenseKey")
-                            {
-                                OnPropertyChanged("LicenseKey");
-                            }
-                        };
-                        AllProductLicenseKey[(Product)item.Key] = keyHelpers;
+                        AllProductLicenseKey[(Product)item.Key].ActiveLicenseKey(checkKey.Key);
                     }
                 }
             }
@@ -76,7 +61,7 @@ namespace SuCri.Modul2.Core.License
         public GetCustomerLicensesResult CustomerInfo { get; set; }
         public ObservableDictionary<Product, WTKeyHelpers> AllProductLicenseKey { get; set; }
 
-        private string tokenWithAllPermission = "WyI1OTMwMzI2NiIsInVpSXM4SG1rU3RYd09IQmh2MmRDRWRDTlNpYWVOcUdFRXJxak5uenEiXQ==";
+        private string tokenWithAllPermission = "WyI2MTU1MzA4NiIsIkxucmJRS1JnV1EwUk94MFdNbVkvN0NzeWpabjN1T2t6UFp0YTJoY1MiXQ==";
         public string CustomerLicensesMessage = "";
         public string CustomerSecret = "";
 
@@ -103,7 +88,6 @@ namespace SuCri.Modul2.Core.License
             }
             else
             {
-                OnPropertyChanged("CustomerInfo");
             }
         }
         public void DeleteCustomerLicenses()
@@ -120,10 +104,6 @@ namespace SuCri.Modul2.Core.License
             return AllProductLicenseKey[product].FeatureActive[feature];
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
     public enum Product

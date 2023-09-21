@@ -25,34 +25,25 @@ namespace SuCri.Modul2.Core.License
                 FeatureActive[feature] = false;
             }
         }
-        public WTKeyHelpers()
+        public WTKeyHelpers(int productId)
         {
             DeclareFeature();
-        }
-        public WTKeyHelpers(string licenseKey, int productId)
-        {
-            DeclareFeature();
-            ActiveLicenseKey(licenseKey, productId);
+            ProductId = productId;
         }
 
         public LicenseKey LicenseKey { get; set; }
+        public int ProductId;
 
-        public void OnLicenseKeyChanged()
-        {
-            OnPropertyChanged("LicenseKey");
-        }
         public string LicenseKeyMessage { get; set; }
-
-
         public string NewLicenseKeyInput { get; set; }
         public string NewLicenseKeyMessage { get; set; }
         public ResultType LicenseKeyStatus { get; set; } =  ResultType.Error;
 
-        private string tokenWithAllPermission = "WyI1OTMwMzI2NiIsInVpSXM4SG1rU3RYd09IQmh2MmRDRWRDTlNpYWVOcUdFRXJxak5uenEiXQ==";
+        private string tokenWithAllPermission = "WyI2MTU1MzA4NiIsIkxucmJRS1JnV1EwUk94MFdNbVkvN0NzeWpabjN1T2t6UFp0YTJoY1MiXQ==";
 
         public ObservableDictionary<Feature, bool> FeatureActive { get; set; } = new ObservableDictionary<Feature, bool>();
 
-        public void ActiveLicenseKey(string keyInput, int productId)
+        public void ActiveLicenseKey(string keyInput)
         {
             var RSAPubKey = "<RSAKeyValue><Modulus>kWSSWcUTKvwvZRtCRrSY0ImORR1C9T2Oduhxq5P2BzT74zOPFef1V4Wx3Z93zZhgdYpLl1bG9wF+IIc1ppfbLs+dH6H37bWaiejny2MVVHYwZ/D5YA3P1tKmlnSoH7BbIozybCXT4ww+6WEduWguolBHbdAeb8GHz2YdFx2JjZZFghFzpd/xEu+GUDrxyuiFAH+rQ9/SZ2qMaB5LhuCZCbeuz71tKHY+rODO+0FXnhs+kaSZSEDsgaIuTAd1a/vfuMNWZ2Cnun3guVaDMvXJa4AUy7RaG4YQrCJSsqbnnCO0n/kLnLoPx2dm0A11xgzNwJN0OQBetv/O6HNEoME93Q==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
             var auth = "WyI1OTMwNjAxNyIsImZsMnhWeWVvN0U2bExxUCt4cHBvZHlPbXA1RTRpNVByMURPeTRkbWoiXQ==";
@@ -60,14 +51,14 @@ namespace SuCri.Modul2.Core.License
             var result = Key.Activate(token: auth, parameters: new ActivateModel()
             {
                 Key = keyInput,
-                ProductId = productId,  // <--  remember to change this to your Product Id
+                ProductId = ProductId,  // <--  remember to change this to your Product Id
                 Sign = true,
                 MachineCode = Helpers.GetMachineCodePI(v: 2)
             });
+            NewLicenseKeyInput = keyInput;
             LicenseKeyStatus = result.Result;
             if (result == null || result.Result == ResultType.Error || !result.LicenseKey.HasValidSignature(RSAPubKey).IsValid())
             {
-                OnPropertyChanged("LicenseKey");
                 if(string.IsNullOrEmpty(result.Message))
                 {
                     NewLicenseKeyMessage = "Your license key is not valid";
@@ -94,7 +85,6 @@ namespace SuCri.Modul2.Core.License
                     LicenseKey = result.LicenseKey;
 
                     NewLicenseKeyMessage = LicenseKeyMessage;
-                    NewLicenseKeyInput = result.LicenseKey.Key;
                 }
                 else
                 {
@@ -104,8 +94,6 @@ namespace SuCri.Modul2.Core.License
                     {
                         LicenseKey = result.LicenseKey;
                         LicenseKeyMessage = NewLicenseKeyMessage;
-
-                        NewLicenseKeyInput = result.LicenseKey.Key;
                     }
                 }
             }
@@ -115,10 +103,10 @@ namespace SuCri.Modul2.Core.License
             if (LicenseKey != null)
             {
                 // Deactive not work, dont know why yet
-                Key.Deactivate(token: tokenWithAllPermission, parameters: new DeactivateModel()
+                var ss = Key.Deactivate(token: tokenWithAllPermission, parameters: new DeactivateModel()
                 {
                     Key = LicenseKey.Key,
-                    ProductId = LicenseKey.ProductId,
+                    ProductId = ProductId,
                     MachineCode = Helpers.GetMachineCodePI(v: 2),
                 });
             }
@@ -141,10 +129,6 @@ namespace SuCri.Modul2.Core.License
             FeatureActive[Feature.F8] = false;
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
