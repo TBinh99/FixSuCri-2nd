@@ -75,6 +75,7 @@
                     Background="{DynamicResource Color1}"
                     Click="ButtonBase_Click"
                     Command="{Binding selectSUCommand}"
+                    IsEnabled="{Binding FeatureStatus[F1]}"
                     Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
                     <materialDesign:PackIcon
                         Width="30"
@@ -117,6 +118,7 @@
                     Click="ButtonBase_Click"
                     Command="{Binding attachCompCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                    IsEnabled="{Binding FeatureStatus[F2]}"
                     Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
                     <materialDesign:PackIcon
                         Width="30"
@@ -158,6 +160,7 @@
                     Background="{DynamicResource Color1}"
                     Click="ButtonBase_Click"
                     Command="{Binding detachCompCommand}"
+                    IsEnabled="{Binding FeatureStatus[F3]}"
                     Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
                     <materialDesign:PackIcon
                         Width="30"
@@ -199,6 +202,7 @@
                     Background="{DynamicResource Color1}"
                     Click="ButtonBase_Click"
                     Command="{Binding getXDataCommand}"
+                    IsEnabled="{Binding FeatureStatus[F4]}"
                     Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}">
                     <materialDesign:PackIcon
                         Width="30"

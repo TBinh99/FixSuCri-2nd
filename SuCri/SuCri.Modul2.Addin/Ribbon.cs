@@ -5,22 +5,8 @@ using Autodesk.AutoCAD.Runtime;
 using Autodesk.Windows;
 using System.Drawing.Imaging;
 using System.Drawing;
-using System.Windows;
-using Autodesk.AutoCAD.Windows;
-using SuCri.Modul2.UI.Acad;
-using System.Windows.Forms.Integration;
-using System.Windows.Forms;
 using MessageBox = System.Windows.Forms.MessageBox;
-using SuCri.Modul2.Addin.CustomPalette;
-using System.Runtime.InteropServices;
-using Autodesk.AutoCAD.Windows.ToolPalette;
-using Autodesk.AutoCAD.DatabaseServices;
-using System.Windows.Shapes;
-using System.Xml.Linq;
-using Autodesk.AutoCAD.ApplicationServices;
-using Autodesk.AutoCAD.EditorInput;
-using Autodesk.AutoCAD.Internal.Reactors;
-using System.Linq;
+using SuCri.Modul2.Core.License;
 
 namespace SuCri.Modul2.Addin
 {
@@ -35,23 +21,25 @@ namespace SuCri.Modul2.Addin
             try
             {
                 var ribbonControl = ComponentManager.Ribbon;
+                
                 var tab = new RibbonTab
                 {
                     Title = "SuCri",
                     Id = "SuCri_TAB_ID"
                 };
-
+              
                 ribbonControl.Tabs.Add(tab);
 
                 // create Ribbon panels
                 var panel1Panel = new RibbonPanelSource
                 {
-                    Title = "Extensions"
+                    Title = "Extensions",
+                    Id = "Sucri_RIBBON_PANEL_ID"
                 };
 
                 var panel1 = new RibbonPanel
                 {
-                    Source = panel1Panel
+                    Source = panel1Panel,
                 };
 
                 tab.Panels.Add(panel1);
@@ -67,6 +55,7 @@ namespace SuCri.Modul2.Addin
                     Size = RibbonItemSize.Large,
                     CommandHandler = new RibbonCommandHandler(),
                     CommandParameter = "SiklaForm",
+                    IsEnabled = WTLicenseKey.Instance.CheckLicenseProduct(Product.Sikla),
                 };
 
                 var pan1Button2 = new RibbonButton
@@ -80,6 +69,7 @@ namespace SuCri.Modul2.Addin
                     Size = RibbonItemSize.Large,
                     CommandHandler = new RibbonCommandHandler(),
                     CommandParameter = "MPSSForm",
+                    IsEnabled = WTLicenseKey.Instance.CheckLicenseProduct(Product.MPSS),
                 };
 
                 //var pan1Button3 = new RibbonButton
@@ -106,6 +96,7 @@ namespace SuCri.Modul2.Addin
                     Size = RibbonItemSize.Large,
                     CommandHandler = new RibbonCommandHandler(),
                     CommandParameter = "Palette",
+                    IsEnabled = WTLicenseKey.Instance.CheckLicenseProduct(Product.Palette),
                 };
 
                 var pan1Button5 = new RibbonButton
@@ -178,12 +169,12 @@ namespace SuCri.Modul2.Addin
                 //pan1Row1.Items.Add(pan1Button3);
                 //pan1Row1.Items.Add(new RibbonRowBreak());
                 //pan1Row1.Items.Add(_pan1Ribcombo1);
-
                 panel1Panel.Items.Add(pan1Button1);
                 panel1Panel.Items.Add(pan1Button2);
                 //panel1Panel.Items.Add(pan1Button3);
                 panel1Panel.Items.Add(pan1Button4);
                 panel1Panel.Items.Add(pan1Button5);
+
                 //panel3Panel.Items.Add(pan3Button1);
                 //panel1Panel.Items.Add(new RibbonSeparator());
                 //panel1Panel.Items.Add(pan1Row1);

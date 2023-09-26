@@ -51,6 +51,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LicenseSingleton.cs" />
     <Compile Include="Model\ClassObservableDictionary.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

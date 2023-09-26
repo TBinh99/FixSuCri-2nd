@@ -16,6 +16,7 @@ using Autodesk.AutoCAD.EditorInput;
 using SuCri.Modul2.Core.License.View;
 using SuCri.Modul2.Core.License.ViewModel;
 using SuCri.Modul2.Core.License;
+using System.Linq;
 
 [assembly: CommandClass(typeof(SuCri.Modul2.Addin.SiklaCmd))]
 
@@ -235,8 +236,7 @@ namespace SuCri.Modul2.Addin
         public void LicenseForm()
         {
             PaletteSingleton.Hide();
-            LicenseUI ui = new LicenseUI() {};
-            ui.Show();
+            LicenseSingleton.Show();
         }
 
         //private void RegisterHaleyThemes()

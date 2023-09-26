@@ -1,4 +1,6 @@
-﻿using SuCri.Modul2.UI.Acad.Utils;
+﻿using CommunityToolkit.Mvvm.Input;
+using SuCri.Modul2.Core.License;
+using SuCri.Modul2.UI.Acad.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,6 +21,14 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
         void CulChanged()
         {
             Culture = CultureInfo.CreateSpecificCulture(Language.Languages[Properties.Settings.Default.Language]);
+        }
+        public ICommand ShowInstallationGuidelines => new RelayCommand(ShowInstallationGuidelinesExecute);
+        void ShowInstallationGuidelinesExecute() 
+        {
+            //LicenceManagerUI wizard = new LicenceManagerUI();
+            //wizard.ShowDialog();
+
+            LicenseSingleton.Show();
         }
 
         public string SettingsViewTabControlText1 { get => _resManager.GetString("SettingsViewTabControlText1", Culture); set { } }

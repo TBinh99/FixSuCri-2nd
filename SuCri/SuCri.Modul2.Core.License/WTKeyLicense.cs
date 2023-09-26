@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using static SuCri.Modul2.Core.License.WTKeyHelpers;
 using System.Collections.ObjectModel;
 using System.Xml.Linq;
+using Autodesk.Windows;
 
 namespace SuCri.Modul2.Core.License
 {
@@ -25,6 +26,13 @@ namespace SuCri.Modul2.Core.License
             foreach (Product product in Enum.GetValues(typeof(Product)))
             {
                 WTKeyHelpers keyHelpers = new WTKeyHelpers((int)product);
+                keyHelpers.PropertyChanged += (s,e) =>
+                {
+                    if (e.PropertyName == "LicenseKey")
+                    {
+                        OnAllProductLicenseKeyChanged(s as WTKeyHelpers);
+                    }
+                };
                 AllProductLicenseKey[product] = keyHelpers;
             }
             if (!string.IsNullOrEmpty(Settings.Default.AllProductLicenseKey))
@@ -44,16 +52,6 @@ namespace SuCri.Modul2.Core.License
             {
                 GetCustomerLicenses(Settings.Default.CustomerSecret);
             }
-
-            //List<string> namePropertyCustomerLicenses = new List<string>() { "CustomerName", "CompanyName", "Email", "CustomerLicensesMessage", "CustomerSecret", "CustomerLicense" };
-            //CustomerLicenses = new ObservableDictionary<string, object>();
-            //foreach (string nameProperty in namePropertyCustomerLicenses)
-            //{
-            //    CustomerLicenses.Add(nameProperty, "");
-            //    if (nameProperty == "CustomerLicense")
-            //    { }
-            //}
-
         }
 
         private static WTLicenseKey _instance;
@@ -72,7 +70,6 @@ namespace SuCri.Modul2.Core.License
         public GetProductsResult ProductsInfo { get; set; }
         public GetCustomerLicensesResult CustomerInfo { get; set; }
 
-        //public ObservableDictionary<string, object> CustomerLicenses { get; set; }
         public string CustomerName { get; set; }
         public string CompanyName { get; set; }
         public string Email { get; set; }
@@ -82,7 +79,20 @@ namespace SuCri.Modul2.Core.License
         public ResultType CustomerLicensesStatus = ResultType.Error;
         public ObservableCollection<WTCustomerLicensesHelper> CustomerLicense { get; set; }
         public ObservableDictionary<Product, WTKeyHelpers> AllProductLicenseKey { get; set; }
+        void OnAllProductLicenseKeyChanged(WTKeyHelpers wtKey) 
+        {
+            Autodesk.Windows.RibbonControl ribbonControls = ComponentManager.Ribbon;
+            RibbonTab ribbonTab = ribbonControls.FindTab("SuCri_TAB_ID");
+            RibbonPanel ribbonPanel = ribbonTab?.FindPanel("Sucri_RIBBON_PANEL_ID");
+            RibbonPanelSource ribbonPanelSource = ribbonPanel?.Source;
+            var siklaButton = ribbonPanelSource?.Items.FirstOrDefault(x => x.AutomationName == ((Product)wtKey.ProductId).ToString()) as RibbonButton;
 
+            if (siklaButton != null)
+            {
+                // Toggle the enabled state
+                siklaButton.IsEnabled = CheckLicenseProduct((Product)wtKey.ProductId);;
+            }
+        }
 
         private string tokenWithAllPermission = "WyI2MTU1MzA4NiIsIkxucmJRS1JnV1EwUk94MFdNbVkvN0NzeWpabjN1T2t6UFp0YTJoY1MiXQ==";
 
@@ -136,9 +146,13 @@ namespace SuCri.Modul2.Core.License
             CustomerLicense.Clear();
         }
 
-        public bool CheckLicense(Product product, Feature feature)
+        public bool CheckLicenseFeature(Product product, Feature feature)
         {
             return AllProductLicenseKey[product].FeatureActive[feature];
+        }
+        public bool CheckLicenseProduct(Product product)
+        {
+            return AllProductLicenseKey[product].LicenseKey?.Period > 0;
         }
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -150,6 +164,8 @@ namespace SuCri.Modul2.Core.License
     public enum Product
     {
         Sikla = 21948,
+        MPSS,
+        Palette,
         TestProduct = 21673,
         SecondProduct = 21881,
         WT = 21883,

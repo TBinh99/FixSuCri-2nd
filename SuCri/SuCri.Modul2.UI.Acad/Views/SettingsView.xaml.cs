@@ -30,11 +30,5 @@ namespace SuCri.Modul2.UI.Acad.Views
             InstallationWizardView wizard = new InstallationWizardView();
             wizard.ShowDialog();
         }
-
-        private void Start_LicenceManager(object sender, RoutedEventArgs e)
-        {
-            LicenceManagerUI wizard = new LicenceManagerUI();
-            wizard.ShowDialog();
-        }
     }
 }

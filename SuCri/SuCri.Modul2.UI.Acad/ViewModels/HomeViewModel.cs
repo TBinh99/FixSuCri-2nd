@@ -99,7 +99,10 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
             Culture = CultureInfo.CreateSpecificCulture(Language.Languages[Properties.Settings.Default.Language]);
 
             MainViewModel.CultureChanged = CulChanged;
+            FeatureStatus = WTLicenseKey.Instance.AllProductLicenseKey[Product.Sikla].FeatureActive;
         }
+
+        public ObservableDictionary<Feature, bool> FeatureStatus { get; set; }
 
         [DllImport("user32.dll")]
         internal static extern IntPtr SetForegroundWindow(IntPtr hWnd);
@@ -154,7 +157,7 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
         }
         private bool CheckLicense(Feature feature)
         {
-            if (WTLicenseKey.Instance.CheckLicense(Product.Sikla, feature))
+            if (WTLicenseKey.Instance.CheckLicenseFeature(Product.Sikla, feature))
             {
                 return true;
             }
