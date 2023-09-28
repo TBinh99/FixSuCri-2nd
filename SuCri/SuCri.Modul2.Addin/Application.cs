@@ -3,6 +3,7 @@ using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
 using SuCri.Modul2.Core.License;
 using SuCri.Modul2.Core.License.View;
+using SuCri.Modul2.Core.License.ViewModel;
 using System;
 using System.IO;
 using System.Reflection;
@@ -22,6 +23,15 @@ namespace SuCri.Modul2.Addin
             new Ribbon().MyRibbon();
 
             var alllicenseKey = WTLicenseKey.Instance;
+
+            if(WTLicenseKey.Instance.CustomerInfo == null)
+            {
+                RegisterVM registerVM = new RegisterVM();
+
+                RegisterUI registerUI = new RegisterUI() { DataContext = registerVM };
+                registerUI.ShowDialog();
+            }
+
             //OverruleStartUp overruleStartUp = new OverruleStartUp();
             //overruleStartUp.LockLayerCommand();
         }

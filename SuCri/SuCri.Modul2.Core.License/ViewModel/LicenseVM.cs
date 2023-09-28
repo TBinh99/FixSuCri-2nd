@@ -33,8 +33,9 @@ namespace SuCri.Modul2.Core.License.ViewModel
         }
         void DeleteLicense(WTKeyHelpers item)
         {
-            var itemCustomerLicense = CustomerLicense.FirstOrDefault(x => x.ValidLicenseKeys == item.NewLicenseKeyInput);
             item.DeactiveLicenseKey();
+
+            WTCustomerLicensesHelper itemCustomerLicense = CustomerLicense?.FirstOrDefault(x => x.ProductId == item.ProductId);
             if (itemCustomerLicense != null)
             {
                 itemCustomerLicense.IsKeyOnMachine();
@@ -45,7 +46,8 @@ namespace SuCri.Modul2.Core.License.ViewModel
             if (!string.IsNullOrEmpty(item.NewLicenseKeyInput))
             {
                 item.ActiveLicenseKey(item.NewLicenseKeyInput);
-                var itemCustomerLicense = CustomerLicense.FirstOrDefault(x => x.ValidLicenseKeys == item.NewLicenseKeyInput);
+
+                WTCustomerLicensesHelper itemCustomerLicense = CustomerLicense?.FirstOrDefault(x => x.ProductId == item.ProductId);
                 if (itemCustomerLicense != null)
                 {
                     itemCustomerLicense.IsKeyOnMachine();

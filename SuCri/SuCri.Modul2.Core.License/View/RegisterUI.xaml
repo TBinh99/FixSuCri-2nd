@@ -1,0 +1,186 @@
+﻿<Window
+    x:Class="SuCri.Modul2.Core.License.View.RegisterUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SuCri.Modul2.Core.License.View"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="clr-namespace:SuCri.Modul2.Core.License.ViewModel"
+    x:Name="RegisterWindow"
+    Width="400"
+    Height="300"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <viewmodel:RegisterVM />
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel>
+        <StackPanel.Resources>
+
+            <Style TargetType="TabItem">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+            <!--<Style TargetType="TextBox">
+                <Setter Property="Width" Value="200" />
+                <Setter Property="Height" Value="20" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>-->
+            <Style TargetType="materialDesign:PackIcon">
+                <Setter Property="Width" Value="50" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="Margin" Value="0,10,0,5" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Width" Value="100" />
+                <Setter Property="Margin" Value="5,0,5,0" />
+            </Style>
+        </StackPanel.Resources>
+        <StackPanel Orientation="Horizontal">
+            <materialDesign:PackIcon Kind="Account" />
+            <TextBox
+                x:Name="NameBox"
+                Width="200"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Center"
+                materialDesign:HintAssist.Hint="Name"
+                materialDesign:HintAssist.HintOpacity="0.5">
+                <TextBox.Text>
+                    <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <viewmodel:NotEmptyValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder />
+                            <TextBlock Foreground="Red" Text="{Binding [0].ErrorContent}" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+
+            <!--<TextBox Text="{Binding Name}" />-->
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <materialDesign:PackIcon Kind="AccountGroup" />
+            <TextBox
+                x:Name="CompanyNameBox"
+                Width="200"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Center"
+                materialDesign:HintAssist.Hint="Company Name"
+                materialDesign:HintAssist.HintOpacity="0.5">
+                <TextBox.Text>
+                    <Binding Path="CompanyName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <viewmodel:NotEmptyValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder />
+                            <TextBlock Foreground="Red" Text="{Binding [0].ErrorContent}" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <materialDesign:PackIcon Kind="Email" />
+            <TextBox
+                x:Name="EmailBox"
+                Width="200"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Center"
+                materialDesign:HintAssist.Hint="Email"
+                materialDesign:HintAssist.HintOpacity="0.5">
+                <TextBox.Text>
+                    <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <viewmodel:EmailValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder />
+                            <TextBlock Foreground="Red" Text="{Binding [0].ErrorContent}" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+        </StackPanel>
+        <TextBlock Text="Please enter your information to registration">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=NameBox, Path=Text.IsEmpty}" Value="False" />
+                                <Condition Binding="{Binding ElementName=EmailBox, Path=Text.IsEmpty}" Value="False" />
+                                <Condition Binding="{Binding ElementName=CompanyNameBox, Path=Text.IsEmpty}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBlock Text="{Binding RegisterMessage}" />
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Width="100"
+                Margin="5,0,5,0"
+                Command="{Binding RegisterCmd}"
+                CommandParameter="{Binding ElementName=RegisterWindow}"
+                Content="Register">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=NameBox, Path=(Validation.HasError)}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=NameBox, Path=Text.IsEmpty}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=EmailBox, Path=(Validation.HasError)}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=EmailBox, Path=Text.IsEmpty}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=CompanyNameBox, Path=(Validation.HasError)}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=CompanyNameBox, Path=Text.IsEmpty}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button
+                Command="{Binding LoginCmd}"
+                CommandParameter="{Binding ElementName=RegisterWindow}"
+                Content="Login" />
+        </StackPanel>
+    </StackPanel>
+</Window>

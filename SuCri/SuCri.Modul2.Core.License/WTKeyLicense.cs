@@ -102,33 +102,48 @@ namespace SuCri.Modul2.Core.License
         }
         public void GetCustomerLicenses(string customerSecret)
         {
-            GetCustomerLicensesBySecretModel customerInfo = new GetCustomerLicensesBySecretModel();
-            customerInfo.Secret = customerSecret;
-            customerInfo.Detailed = true;
-            var customerLicenses = CustomerMethods.GetCustomerLicensesBySecret(tokenWithAllPermission, customerInfo);
-            CustomerLicensesStatus = customerLicenses.Result;
-            CustomerLicensesMessage = customerLicenses.Message;
-            if (customerLicenses.Result == ResultType.Success)
+            GetCustomersResult resultGetCustomer = CustomerMethods.GetCustomers(tokenWithAllPermission, new GetCustomersModel()
             {
-                CustomerSecret = customerSecret;
-                CustomerInfo = customerLicenses;
-
-                Settings.Default.CustomerSecret = customerSecret;
-                Settings.Default.Save();
-
-                var firstKey = customerLicenses.LicenseKeys.FirstOrDefault();
-                CustomerName = firstKey?.Customer.Name;
-                CompanyName = firstKey?.Customer.CompanyName;
-                Email = firstKey?.Customer.Email;
-                ObservableCollection<WTCustomerLicensesHelper> licenses = new ObservableCollection<WTCustomerLicensesHelper>();
-                foreach (var licenseInfo in customerLicenses.LicenseKeys)
+                Search = customerSecret,
+            });
+            if (resultGetCustomer.Result == ResultType.Success)
+            {
+                if (resultGetCustomer.Customers.Count > 1)
                 {
-                    licenses.Add(new WTCustomerLicensesHelper(licenseInfo, ProductsInfo.Products, AllProductLicenseKey));
+                    CustomerLicensesStatus = ResultType.Error;
+                    CustomerLicensesMessage = "Your customer Secret has been duplicated, please contact us to change it";
                 }
-                CustomerLicense = licenses;
-            }
-            else
-            {
+                else if (resultGetCustomer.Customers.Count == 1)
+                {
+                    Customer customerInfomation = resultGetCustomer.Customers.First();
+                    CustomerName = customerInfomation.Name;
+                    CompanyName = customerInfomation.CompanyName;
+                    Email = customerInfomation.Email;
+                    GetCustomerLicensesBySecretModel customerInfo = new GetCustomerLicensesBySecretModel();
+                    customerInfo.Secret = customerSecret;
+                    customerInfo.Detailed = true;
+                    var customerLicenses = CustomerMethods.GetCustomerLicensesBySecret(tokenWithAllPermission, customerInfo);
+                    CustomerLicensesStatus = customerLicenses.Result;
+                    CustomerLicensesMessage = customerLicenses.Message;
+                    if (customerLicenses.Result == ResultType.Success)
+                    {
+                        CustomerSecret = customerSecret;
+                        CustomerInfo = customerLicenses;
+
+                        Settings.Default.CustomerSecret = customerSecret;
+                        Settings.Default.Save();
+
+                        ObservableCollection<WTCustomerLicensesHelper> licenses = new ObservableCollection<WTCustomerLicensesHelper>();
+                        foreach (var licenseInfo in customerLicenses.LicenseKeys)
+                        {
+                            licenses.Add(new WTCustomerLicensesHelper(licenseInfo, ProductsInfo.Products, AllProductLicenseKey));
+                        }
+                        CustomerLicense = licenses;
+                    }
+                    else
+                    {
+                    }
+                }
             }
         }
         public void DeleteCustomerLicenses()
