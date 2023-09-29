@@ -5,9 +5,6 @@
     <Setting Name="CustomerSecret" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ProductId" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="AllProductLicenseKey" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

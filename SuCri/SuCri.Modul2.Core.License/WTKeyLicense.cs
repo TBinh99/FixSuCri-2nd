@@ -158,7 +158,7 @@ namespace SuCri.Modul2.Core.License
             Email = "";
             CustomerLicensesMessage = "";
             CustomerSecret = null;
-            CustomerLicense.Clear();
+            CustomerLicense?.Clear();
         }
 
         public bool CheckLicenseFeature(Product product, Feature feature)

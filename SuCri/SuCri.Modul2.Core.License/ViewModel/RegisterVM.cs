@@ -69,7 +69,7 @@ namespace SuCri.Modul2.Core.License.ViewModel
                         ProductId = productId,
                         MachineCode = Helpers.GetMachineCodePI(v: 2),
                     });
-
+  
                     //Activate trial key
                     WTLicenseKey.Instance.AllProductLicenseKey[(Product)productId].ActiveLicenseKey(createTrialKey.Key);
                     KeyInfoResult activateTrialKey = SKM.V3.Methods.Key.Activate(tokenWithAllPermission, new ActivateModel()
@@ -86,6 +86,8 @@ namespace SuCri.Modul2.Core.License.ViewModel
                         ProductId = productId,
                         CustomerId = newCustomer.CustomerId
                     });
+
+                    WTLicenseKey.Instance.GetCustomerLicenses(newCustomer.Secret);
 
                     //Select Feature
                     List<Feature> FeatureActivated = new List<Feature>()
@@ -118,7 +120,7 @@ namespace SuCri.Modul2.Core.License.ViewModel
                         }
                     }
 
-                    WTLicenseKey.Instance.GetCustomerLicenses(newCustomer.Secret);
+
 
                     RegisterMessage = "You have successfully registered";
 

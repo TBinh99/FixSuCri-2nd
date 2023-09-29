@@ -164,7 +164,7 @@
                     Content="Delete Customer Licenses On Device" />
             </Grid>
         </TabItem>
-        <TabItem Header="Licenses Key">
+        <TabItem Margin="-3,-2,-1,0" Header="Licenses Key">
             <TabControl ItemsSource="{Binding LicenseKeySource}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">

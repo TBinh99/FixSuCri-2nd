@@ -37,18 +37,6 @@ namespace SuCri.Modul2.Core.License.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int ProductId {
-            get {
-                return ((int)(this["ProductId"]));
-            }
-            set {
-                this["ProductId"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string AllProductLicenseKey {
             get {
