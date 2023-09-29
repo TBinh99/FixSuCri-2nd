@@ -161,10 +161,6 @@ namespace SuCri.Modul2.Core.License
             CustomerLicense?.Clear();
         }
 
-        public bool CheckLicenseFeature(Product product, Feature feature)
-        {
-            return AllProductLicenseKey[product].FeatureActive[feature];
-        }
         public bool CheckLicenseProduct(Product product)
         {
             return AllProductLicenseKey[product].LicenseKey?.Period > 0;

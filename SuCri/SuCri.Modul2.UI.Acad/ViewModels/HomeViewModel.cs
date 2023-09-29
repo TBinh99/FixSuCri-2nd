@@ -127,8 +127,6 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
 
         private void ExecuteAttachCompCommand(System.Windows.Window p)
         {
-            if (CheckLicense(Feature.F2))
-            {
                 p.Hide();
                 Document doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
                 if (doc == null)
@@ -141,7 +139,6 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
                 //Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
                 //doc.SendStringToExecute("_.AttachSupport\n", true, false, false);
                 //Application.DocumentManager.MdiActiveDocument.CommandCancelled += (sender, e) => MdiActiveDocument_CommandCancelled(sender, e, p);
-            }
         }
 
         static void doc_CommandHandler(object sender, CommandEventArgs e, System.Windows.Window p, string commandName)
@@ -155,51 +152,28 @@ namespace SuCri.Modul2.UI.Acad.ViewModels
         {
             Application.DocumentManager.MdiActiveDocument.CommandCancelled -= (sender1, e1) => MdiActiveDocument_CommandCancelled(sender1, e1, p);
         }
-        private bool CheckLicense(Feature feature)
-        {
-            if (WTLicenseKey.Instance.CheckLicenseFeature(Product.Sikla, feature))
-            {
-                return true;
-            }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show($"Feature is not active");
-                //Document doc = Application.DocumentManager.MdiActiveDocument;
-                //doc.Editor.WriteMessage("Feature is not active");
-                return false;
-            }
-        }
         private void ExecuteSelectSUCommand(object obj)
         {
-            if (CheckLicense(Feature.F1)) 
-            {
                 Document doc = Application.DocumentManager.MdiActiveDocument;
                 if (doc == null)
                     return;
                 doc.SendStringToExecute("_.SelectSupport\n", true, false, false);
-            }
         }
 
         private void ExecuteDetachCompCommand(object obj)
         {
-            if (CheckLicense(Feature.F3)) 
-            { 
                 Document doc = Application.DocumentManager.MdiActiveDocument;
                 if (doc == null)
                     return;
                 doc.SendStringToExecute("_.DetachSupport\n", true, false, false);
-            }
         }
 
         private void ExecuteGetXDataCommand(object obj)
         {
-            if (CheckLicense(Feature.F4))
-            {
                 Document doc = Application.DocumentManager.MdiActiveDocument;
                 if (doc == null)
                     return;
                 doc.SendStringToExecute("_.SupportXdata\n", true, false, false);
-            }
         }
 
         private void ExecuteExportBOMDWGCommand(object obj)
