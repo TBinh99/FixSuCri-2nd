@@ -84,6 +84,22 @@ namespace SuCri.Modul2.Core.License.ViewModel
         public ICommand ActiveKeyCmd => new RelayCommand<WTCustomerLicensesHelper>(ActiveKey);
         public ICommand DeactiveKeyCmd => new RelayCommand<WTCustomerLicensesHelper>(DeactiveKey);
         public ICommand RefreshCustomerInfoCmd => new RelayCommand(CustomerChanged);
+        public ICommand RegisterCmd => new RelayCommand<Window>(Register);
+        private RegisterUI registerUI;
+        void Register(Window p) 
+        {
+            p.Close();
+            if (registerUI == null)
+            {
+                RegisterVM registerVM = new RegisterVM();
+                registerUI = new RegisterUI() { DataContext = registerVM };
+                registerUI.ShowDialog();
+            }
+            else 
+            {
+                registerUI.ShowDialog();
+            }
+        }
         void CloseCustomerLicenses() 
         {
             CustomerSecertInput = "";

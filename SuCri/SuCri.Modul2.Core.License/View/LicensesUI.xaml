@@ -5,8 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:SuCri.Modul2.Core.License.View"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:SuCri.Modul2.Core.License.ViewModel"
+    x:Name="LicenseManagerUI"
     Title="Licenses"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -22,292 +24,308 @@
             <i:InvokeCommandAction Command="{Binding CloseCustomerLicensesCmd}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <TabControl>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="SelectionChanged">
-                <i:InvokeCommandAction Command="{Binding RefreshCustomerInfoCmd}" PassEventArgsToCommand="True" />
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
-        <TabItem Header="Customer Licenses">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="150" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition />
-                    <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-                <StackPanel
-                    Grid.Row="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <TextBox
-                            Width="500"
-                            Height="30"
-                            VerticalContentAlignment="Center"
-                            Text="{Binding CustomerSecertInput}" />
-                        <Button
-                            Height="30"
-                            Margin="5,0,0,0"
-                            Command="{Binding GetCustomerLicensesCmd}"
-                            Content="Get Customer Licenses" />
+    <Grid>
+        <TabControl>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding RefreshCustomerInfoCmd}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <TabItem Header="Customer Licenses">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Button
+                        Width="20"
+                        Height="20"
+                        Margin="0,5,5,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Command="{Binding RegisterCmd}"
+                        CommandParameter="{Binding ElementName=LicenseManagerUI}">
+                        <materialDesign:PackIcon Kind="AccountPlus" />
+                    </Button>
+                    <StackPanel
+                        Grid.Row="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBox
+                                Width="500"
+                                Height="30"
+                                VerticalContentAlignment="Center"
+                                Text="{Binding CustomerSecertInput}" />
+                            <Button
+                                Height="30"
+                                Margin="5,0,0,0"
+                                Command="{Binding GetCustomerLicensesCmd}"
+                                Content="Get Customer Licenses" />
+                        </StackPanel>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding CustomerLicenseMessage}" />
                     </StackPanel>
-                    <TextBlock HorizontalAlignment="Center" Text="{Binding CustomerLicenseMessage}" />
-                </StackPanel>
-                <StackPanel
-                    Grid.Row="1"
-                    Margin="0,0,0,10"
-                    HorizontalAlignment="Left">
-                    <TextBlock HorizontalAlignment="Left" Text="Customer Information" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="Company Name: " />
-                            <TextBlock Text="Email: " />
-                            <TextBlock Text="Name: " />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Margin="10,0,0,0" Text="{Binding CompanyName}" />
-                            <TextBlock Margin="10,0,0,0" Text="{Binding Email}" />
-                            <TextBlock Margin="10,0,0,0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-                <DataGrid
-                    Grid.Row="2"
-                    HorizontalAlignment="Left"
-                    AutoGenerateColumns="False"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    CanUserAddRows="False"
-                    ColumnWidth="*"
-                    ItemsSource="{Binding CustomerLicense, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGrid.Columns>
-                        <!--  Other columns here  -->
-                        <DataGridTemplateColumn Width="2*" Header="Valid License Keys">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding ValidLicenseKeys}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="1.5*" Header="Product">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding ProductName}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="1*" Header="Expiration Date">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding ExpirationDate}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="70" Header="Machines">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Machines}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="100" Header="Active/Deactive">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Button
-                                            HorizontalContentAlignment="Center"
-                                            VerticalContentAlignment="Center"
-                                            BorderThickness="0"
-                                            Command="{Binding DataContext.ActiveKeyCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding}"
-                                            Content="Active Key" />
-                                        <Button
-                                            HorizontalContentAlignment="Center"
-                                            VerticalContentAlignment="Center"
-                                            BorderThickness="0"
-                                            Command="{Binding DataContext.DeactiveKeyCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding}"
-                                            Content="Deactive Key"
-                                            Visibility="{Binding EnableDeactive}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <!--  Status column with the circle  -->
-                        <DataGridTemplateColumn Width="50" Header="Status">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Ellipse
-                                        Width="16"
-                                        Height="16"
-                                        Fill="{Binding Status}"
-                                        Stroke="Black"
-                                        StrokeThickness="1" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Button
-                    Grid.Row="4"
-                    Width="200"
-                    Height="30"
-                    Margin="0,10,10,10"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Command="{Binding DeleteCustomerCmd}"
-                    Content="Delete Customer Licenses On Device" />
-            </Grid>
-        </TabItem>
-        <TabItem Margin="-3,-2,-1,0" Header="Licenses Key">
-            <TabControl ItemsSource="{Binding LicenseKeySource}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding RefreshItemLicenseKeyCmd}" PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <TabControl.ItemTemplate>
-                    <!--  this is the header template  -->
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Key}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
+                    <StackPanel
+                        Grid.Row="1"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Left">
+                        <TextBlock HorizontalAlignment="Left" Text="Customer Information" />
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="50" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <StackPanel
-                                Grid.Row="0"
-                                Margin="0,20,20,30"
-                                HorizontalAlignment="Right"
-                                Visibility="{Binding Value.LicenseKeyStatus, Converter={StaticResource StatusToVisibilityConverter}}">
-                                <TextBlock HorizontalAlignment="Left" Text="Customer Information" />
-                                <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Company Name: " />
+                                <TextBlock Text="Email: " />
+                                <TextBlock Text="Name: " />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Margin="10,0,0,0" Text="{Binding CompanyName}" />
+                                <TextBlock Margin="10,0,0,0" Text="{Binding Email}" />
+                                <TextBlock Margin="10,0,0,0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    <DataGrid
+                        Grid.Row="2"
+                        HorizontalAlignment="Left"
+                        AutoGenerateColumns="False"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        CanUserAddRows="False"
+                        ColumnWidth="*"
+                        ItemsSource="{Binding CustomerLicense, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGrid.Columns>
+                            <!--  Other columns here  -->
+                            <DataGridTemplateColumn Width="2*" Header="Valid License Keys">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ValidLicenseKeys}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="1.5*" Header="Product">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ProductName}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="1*" Header="Expiration Date">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ExpirationDate}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="70" Header="Machines">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Machines}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="100" Header="Active/Deactive">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Button
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                BorderThickness="0"
+                                                Command="{Binding DataContext.ActiveKeyCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                                CommandParameter="{Binding}"
+                                                Content="Active Key" />
+                                            <Button
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                BorderThickness="0"
+                                                Command="{Binding DataContext.DeactiveKeyCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                                CommandParameter="{Binding}"
+                                                Content="Deactive Key"
+                                                Visibility="{Binding EnableDeactive}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <!--  Status column with the circle  -->
+                            <DataGridTemplateColumn Width="50" Header="Status">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Ellipse
+                                            Width="16"
+                                            Height="16"
+                                            Fill="{Binding Status}"
+                                            Stroke="Black"
+                                            StrokeThickness="1" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button
+                        Grid.Row="4"
+                        Width="200"
+                        Height="30"
+                        Margin="0,10,10,10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding DeleteCustomerCmd}"
+                        Content="Delete Customer Licenses On Device" />
+                </Grid>
+            </TabItem>
+            <TabItem Margin="-3,-2,-1,0" Header="Licenses Key">
+                <TabControl ItemsSource="{Binding LicenseKeySource}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding RefreshItemLicenseKeyCmd}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TabControl.ItemTemplate>
+                        <!--  this is the header template  -->
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Key}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Margin="0,20,20,30"
+                                    HorizontalAlignment="Right"
+                                    Visibility="{Binding Value.LicenseKeyStatus, Converter={StaticResource StatusToVisibilityConverter}}">
+                                    <TextBlock HorizontalAlignment="Left" Text="Customer Information" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Company Name: " />
+                                            <TextBlock Text="Email: " />
+                                            <TextBlock Text="Name: " />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Customer.CompanyName}" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Customer.Email}" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Customer.Name}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <TextBox
+                                        Width="500"
+                                        Height="30"
+                                        Margin="5,0,5,0"
+                                        VerticalContentAlignment="Center"
+                                        Text="{Binding Value.NewLicenseKeyInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button
+                                        Height="30"
+                                        Command="{Binding DataContext.ActiveLicenseCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}"
+                                        CommandParameter="{Binding Value}"
+                                        Content="Active license" />
+                                </StackPanel>
+                                <TextBlock
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Center"
+                                    Text="{Binding Value.NewLicenseKeyMessage}" />
+                                <Grid
+                                    Grid.Row="3"
+                                    Margin="100,20,20,30"
+                                    Visibility="{Binding Value.LicenseKeyStatus, Converter={StaticResource StatusToVisibilityConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock Text="Company Name: " />
-                                        <TextBlock Text="Email: " />
-                                        <TextBlock Text="Name: " />
+                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="F1 Feature :" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F1}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="F2 Feature :" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F2}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="F3 Feature :" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F3}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="F4 Feature :" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F4}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="F5 Feature :" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F5}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="F6 Feature :" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F6}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="F7 Feature :" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F7}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="F8 Feature :" />
+                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F8}" />
+                                        </StackPanel>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Customer.CompanyName}" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Customer.Email}" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Customer.Name}" />
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="Activated Marchine" />
+                                                <TextBlock Text="Created" />
+                                                <TextBlock Text="Expires" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.ActivatedMachines.Count}" />
+                                                <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Created}" />
+                                                <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Expires}" />
+                                            </StackPanel>
+                                        </Grid>
                                     </StackPanel>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel
-                                Grid.Row="1"
-                                HorizontalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBox
-                                    Width="500"
-                                    Height="30"
-                                    Margin="5,0,5,0"
-                                    VerticalContentAlignment="Center"
-                                    Text="{Binding Value.NewLicenseKeyInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <Button
-                                    Height="30"
-                                    Command="{Binding DataContext.ActiveLicenseCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}"
-                                    CommandParameter="{Binding Value}"
-                                    Content="Active license" />
-                            </StackPanel>
-                            <TextBlock
-                                Grid.Row="2"
-                                HorizontalAlignment="Center"
-                                Text="{Binding Value.NewLicenseKeyMessage}" />
-                            <Grid
-                                Grid.Row="3"
-                                Margin="100,20,20,30"
-                                Visibility="{Binding Value.LicenseKeyStatus, Converter={StaticResource StatusToVisibilityConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Orientation="Vertical">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="F1 Feature :" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F1}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="F2 Feature :" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F2}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="F3 Feature :" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F3}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="F4 Feature :" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F4}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="F5 Feature :" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F5}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="F6 Feature :" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F6}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="F7 Feature :" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F7}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="F8 Feature :" />
-                                        <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.F8}" />
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <TextBlock Text="Activated Marchine" />
-                                            <TextBlock Text="Created" />
-                                            <TextBlock Text="Expires" />
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1">
-                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.ActivatedMachines.Count}" />
-                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Created}" />
-                                            <TextBlock Margin="10,0,0,0" Text="{Binding Value.LicenseKey.Expires}" />
-                                        </StackPanel>
-                                    </Grid>
-                                </StackPanel>
 
+                                </Grid>
+                                <Button
+                                    Grid.Row="4"
+                                    Width="180"
+                                    Height="30"
+                                    Margin="0,10,10,10"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding DataContext.DeleteLicenseCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}"
+                                    CommandParameter="{Binding Value}"
+                                    Content="Delete License On Device" />
                             </Grid>
-                            <Button
-                                Grid.Row="4"
-                                Width="180"
-                                Height="30"
-                                Margin="0,10,10,10"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Command="{Binding DataContext.DeleteLicenseCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}"
-                                CommandParameter="{Binding Value}"
-                                Content="Delete License On Device" />
-                        </Grid>
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
-        </TabItem>
-    </TabControl>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
+            </TabItem>
+
+
+
+        </TabControl>
+
+    </Grid>
 </Window>
